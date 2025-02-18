@@ -40,6 +40,7 @@ public class AudioManager : MonoBehaviour
     private List<AudioSource> audioSources = new List<AudioSource>();
 
     // Ints for sound indexes
+    // Every class will need one of these for each looping sound effect they have
     private int musicSFX;
 
     // Start is called before the first frame update
