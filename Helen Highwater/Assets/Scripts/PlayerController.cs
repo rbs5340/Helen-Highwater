@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour
         {
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);
+            dashAvailable = true;
         }
 
     }
