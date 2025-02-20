@@ -36,6 +36,8 @@ public class CameraFollowPlayer : MonoBehaviour
     {
         Vector3 pos=transform.position;
         pos.x = player.position.x;
+        pos.y = player.position.y / 1.5f;
+        if (pos.y < 0) pos.y = 0;
         transform.position = pos;
     }
 
