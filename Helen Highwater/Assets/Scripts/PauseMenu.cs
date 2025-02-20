@@ -13,7 +13,10 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject optionsMenu;
 
-    public GameObject textTest;
+    //Text sliders
+    public TextMeshProUGUI masterText;
+    public TextMeshProUGUI musicText;
+    public TextMeshProUGUI sfxText;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +27,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+ 
     }
 
     public void Pause()
@@ -70,17 +73,17 @@ public class PauseMenu : MonoBehaviour
     public void SetMasterVolume(System.Single value)
     {
         AudioManager.Instance.SetMaster(value);
-        textTest.GetComponent<TextMeshProUGUI>().text = (int)(value * 100) + "%";
+        masterText.text = (int)(value * 100) + "%";
     }
-    public void SetMusicVolume(Slider slider)
+    public void SetMusicVolume(System.Single value)
     {
-        //AudioManager.Instance.musicVolume = slider.value;
-        slider.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = slider.value + "%";
+        AudioManager.Instance.SetMusic(value);
+        musicText.text = (int)(value * 100) + "%";
     }
-    public void SetSfxVolume(Slider slider)
+    public void SetSfxVolume(System.Single value)
     {
-        //AudioManager.Instance.sfxVolume = slider.value;
-        slider.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = slider.value + "%";
+        AudioManager.Instance.SetSFX(value);
+        sfxText.text = (int)(value * 100) + "%";
     }
 
 }

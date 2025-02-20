@@ -10,7 +10,7 @@ public class Crate : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroys the crate when the wrench collides with it
         if (collision.gameObject.layer == 11)
@@ -29,7 +29,7 @@ public class Crate : MonoBehaviour
     private void DestroyThis()
     {
         // Play the crate destroying sound effect
-        //AudioManager.Instance.PlaySoundEffect("not yet implemented");
+        AudioManager.Instance.PlaySoundEffect("crateDestroy");
 
         Destroy(this.gameObject);
 

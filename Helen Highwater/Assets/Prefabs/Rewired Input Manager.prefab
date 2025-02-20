@@ -616,7 +616,7 @@ MonoBehaviour:
       customControllerUid: 0
       actionElementMaps:
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 3
         _elementType: 1
         _elementIdentifierId: -1
         _axisRange: 0
