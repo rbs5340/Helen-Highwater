@@ -18,7 +18,7 @@ public class MechController : MonoBehaviour
         fall,
         damaged,
         wrenchThrow,
-        dash
+        hover
     }
 
     private Rigidbody2D rb;
@@ -39,6 +39,10 @@ public class MechController : MonoBehaviour
 
     private float direction;
     private state playerState;
+
+    //Testing hover
+    private float hoverTimer;
+    private bool hoverAvailable;
 
     private void Start()
     {
@@ -61,9 +65,10 @@ public class MechController : MonoBehaviour
         HandleMovement();
         HandleJumping();
         HandleAttack();
+        HandleHover(); //HOVER TEST
 
         //Logs player game state for testing purposes
-        Debug.Log(playerState.ToString());
+        //Debug.Log(playerState.ToString());
 
     }
 
@@ -105,7 +110,7 @@ public class MechController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f)
+        if (rb.velocity.y < 0f && playerState != state.hover) //Hover test
         {
             playerState = state.fall;
         }
@@ -139,11 +144,46 @@ public class MechController : MonoBehaviour
         }
     }
 
+    //Testing Hover
+    private void HandleHover()
+    {
+        //Debug.Log(dashTimer);
+        //Will keep the player's momentum while in dash state and increment the timer
+        if (playerState == state.hover)
+        {
+
+            if (hoverTimer > 0)
+            {
+                hoverTimer -= Time.deltaTime;
+                if (rb.velocity.y <= 0f)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 0f);
+                }
+
+            }
+            else
+            {
+                playerState = state.fall;
+            }
+        }
+
+        //Will begin the dash if not already in dash state and the button is pressed
+        else if (player.GetButtonDown("Dash") && hoverAvailable && isGrounded == false)
+        {
+            hoverAvailable = false;
+            playerState = state.hover;
+            hoverTimer = 1f;
+            isGrounded = false;
+        }
+
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            hoverAvailable = true; //Test hover
             if (Mathf.Abs(rb.velocity.x) > 0)
             {
                 playerState = state.run;
@@ -154,4 +194,5 @@ public class MechController : MonoBehaviour
             }
         }
     }
+
 }
