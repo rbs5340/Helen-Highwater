@@ -106,6 +106,8 @@ public class MechController : MonoBehaviour
         if (player.GetButtonDown("Jump") && isGrounded)
 
         {
+            // Plays mech jump sound effect
+            AudioManager.Instance.PlaySoundEffect("mechJump");
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
             playerState = state.rise;
@@ -137,6 +139,9 @@ public class MechController : MonoBehaviour
     {
         GameObject projectile = Instantiate(ProjectilePrefab, attackSpawnPoint.position, Quaternion.identity);
         MechProjectileBehaviour projectileScript = projectile.GetComponent<MechProjectileBehaviour>();
+
+        // Play the projectile sound effect
+        AudioManager.Instance.PlaySoundEffect("mechProjectile");
 
         if (projectileScript)
         {
