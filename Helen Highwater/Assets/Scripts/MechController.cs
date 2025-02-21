@@ -44,6 +44,10 @@ public class MechController : MonoBehaviour
     private float hoverTimer;
     private bool hoverAvailable;
 
+    // Integers to store looping SFX indexes
+    private int mechRunID;
+    private int mechHoverID;
+
     private void Start()
     {
         // Get Rewired Player
@@ -58,6 +62,9 @@ public class MechController : MonoBehaviour
         {
             Debug.LogError("No Rigidbody2D found on Player!");
         }
+
+        mechRunID = AudioManager.Instance.AddAudio("mechRun");
+        mechHoverID = AudioManager.Instance.AddAudio("mechHover");
     }
 
     private void Update()
@@ -98,6 +105,15 @@ public class MechController : MonoBehaviour
             {
                 playerState = state.idle;
             }
+        }
+
+        if(playerState == state.run)
+        {
+
+        }
+        else
+        {
+
         }
     }
 
