@@ -107,13 +107,16 @@ public class MechController : MonoBehaviour
             }
         }
 
-        if(playerState == state.run)
+        if (playerState == state.run)
         {
-
+            AudioManager.Instance.PlayAudio(mechRunID);
         }
         else
         {
-
+            if (AudioManager.Instance.isPlaying(mechRunID))
+            {
+                AudioManager.Instance.StopAudio(mechRunID);
+            }
         }
     }
 
@@ -195,6 +198,18 @@ public class MechController : MonoBehaviour
             playerState = state.hover;
             hoverTimer = 1f;
             isGrounded = false;
+        }
+
+        if (playerState == state.hover)
+        {
+            AudioManager.Instance.PlayAudio(mechHoverID);
+        }
+        else
+        {
+            if (AudioManager.Instance.isPlaying(mechHoverID))
+            {
+                AudioManager.Instance.StopAudio(mechHoverID);
+            }
         }
 
     }

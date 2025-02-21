@@ -129,7 +129,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            AudioManager.Instance.StopAudio(helenRunID);
+            if (AudioManager.Instance.isPlaying(helenRunID))
+            {
+                AudioManager.Instance.StopAudio(helenRunID);
+            }
         }
     }
 

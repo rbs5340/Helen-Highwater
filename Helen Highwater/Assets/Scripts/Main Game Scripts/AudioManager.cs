@@ -76,6 +76,8 @@ public class AudioManager : MonoBehaviour
         // Stores the selected sound file
         AudioClip soundEffect = Resources.Load("Audio/" + soundEffectName) as AudioClip;
 
+        // Should probably add a check to make sure audio clip actually exists
+
         // Plays the sound file at the appropriate volume
         source.PlayOneShot(soundEffect, masterVolume * sfxVolume);
 
@@ -86,6 +88,16 @@ public class AudioManager : MonoBehaviour
     // AddSoundEffect: Setup for sound effects that need to be looped
     public int AddAudio(string audioName)
     {
+        // Prevents same audio track from being added twice
+        for(int i = 0; i < audioClips.Count; i++)
+        {
+            // Returns original audio clip instead
+            if(audioClips[i].name == audioName)
+            {
+                return i;
+            }
+        }
+
         // Adds the requested AudioClip to the list
         AudioClip soundEffect = Resources.Load("Audio/" + audioName) as AudioClip;
         audioClips.Add(soundEffect);
@@ -113,9 +125,14 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        
-        Debug.Log("Now Playing: " + audioClips[audioID]);
+        Debug.Log("Now Playing: " + audioClips[audioID].name);
         audioSources[audioID].Play();
+    }
+
+    // Returns whether or not audio file is currently playing
+    public bool isPlaying(int audioID)
+    {
+        return audioSources[audioID].isPlaying;
     }
 
     // PauseAudio: Pauses a looping sound effect at a specified index
