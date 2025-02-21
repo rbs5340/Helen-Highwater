@@ -26,5 +26,6 @@ public class PlayerSwitch : MonoBehaviour
     {
         Vector3 spawnPosition = position ?? Vector3.zero; // Default to (0,0,0) if no position is given
         currentPlayer = Instantiate(playerPrefabs[index], spawnPosition, Quaternion.identity);
+        CameraFollowPlayer.Instance.SetPlayer(currentPlayer);
     }
 }
