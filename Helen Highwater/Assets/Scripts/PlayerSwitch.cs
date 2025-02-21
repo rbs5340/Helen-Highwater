@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerSwitcher : MonoBehaviour
+public class PlayerSwitch : MonoBehaviour
 {
-    public GameObject[] playerPrefabs; // assign player prefabs in inspector
+    public GameObject[] playerPrefabs; // Assign different player prefabs in Inspector
     private GameObject currentPlayer;
     private int currentIndex = 0;
 
@@ -15,16 +15,16 @@ public class PlayerSwitcher : MonoBehaviour
     {
         if (currentPlayer != null)
         {
-            Vector3 position = currentPlayer.transform.position; // save position
-            Destroy(currentPlayer); // remove old player
-            currentIndex = (currentIndex + 1) % playerPrefabs.Length; // cycle index
+            Vector3 position = currentPlayer.transform.position; // Save player position
+            Destroy(currentPlayer); // Remove old player
+            currentIndex = (currentIndex + 1) % playerPrefabs.Length; // Cycle index
             SpawnPlayer(currentIndex, position);
         }
     }
 
     private void SpawnPlayer(int index, Vector3? position = null)
     {
-        Vector3 spawnPosition = position ?? Vector3.zero; // debug: default to (0,0,0) if no position
+        Vector3 spawnPosition = position ?? Vector3.zero; // Default to (0,0,0) if no position is given
         currentPlayer = Instantiate(playerPrefabs[index], spawnPosition, Quaternion.identity);
     }
 }
