@@ -849,6 +849,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 419735377}
+    - target: {fileID: 5735584288973848799, guid: 2866292f9b620b34aa1507722fda276d, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7109997746492846006, guid: 2866292f9b620b34aa1507722fda276d, type: 3}
       propertyPath: m_Name
       value: DEMO - UI Canvas
@@ -871,7 +875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8063027765620152031, guid: 2866292f9b620b34aa1507722fda276d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 326
+      value: 282
       objectReference: {fileID: 0}
     - target: {fileID: 8743966653198757195, guid: 2866292f9b620b34aa1507722fda276d, type: 3}
       propertyPath: m_Pivot.x
