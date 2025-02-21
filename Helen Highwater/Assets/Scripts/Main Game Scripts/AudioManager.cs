@@ -145,7 +145,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Now Pausing: " + audioClips[audioID]);
+        Debug.Log("Now Pausing: " + audioClips[audioID].name);
         audioSources[audioID].Pause();
     }
 
@@ -159,7 +159,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Now Stopping: " + audioClips[audioID]);
+        Debug.Log("Now Stopping: " + audioClips[audioID].name);
         audioSources[audioID].Stop();
     }
 
