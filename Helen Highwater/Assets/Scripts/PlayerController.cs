@@ -53,7 +53,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        helenRunID = AudioManager.Instance.AddAudio("helenRun");
+        // Loads in Helen's run audio
+        helenRunID = AudioManager.Instance.AddAudio("helenRun2");
 
         // Get Rewired Player
         player = ReInput.players.GetPlayer(playerId);
