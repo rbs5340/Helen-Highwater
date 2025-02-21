@@ -56,6 +56,7 @@ public class AudioManager : MonoBehaviour
         audioSources.Clear();
 
         // Sound Index variables should be initialized to a value less than 0
+        // Or they should be initialized with AddAudio immediately
         musicSFX = -1;
 
         // Testing junk
@@ -97,21 +98,23 @@ public class AudioManager : MonoBehaviour
         // Adds the clip to the source
         source.clip = soundEffect;
 
-        // Returns the index of the added sound effect
+        // Returns the name of the sound file and its index
         // Store this index in order to call to Play/Pause/Stop
-        Debug.Log(audioClips.Count - 1);
+        Debug.Log("Audio Index " + (audioClips.Count - 1) + ": " + audioName);
         return audioClips.Count - 1;
     }
 
     // PlayAudio: Plays a looping sound effect at a specified index
     public void PlayAudio(int audioID)
     {
-        // Return if audioID is invalid
-        if(audioID < 0)
+        // Return if audioID is invalid or if track is already playing
+        if(audioID < 0 || audioSources[audioID].isPlaying)
         {
             return;
         }
 
+        
+        Debug.Log("Now Playing: " + audioClips[audioID]);
         audioSources[audioID].Play();
     }
 
@@ -125,6 +128,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("Now Pausing: " + audioClips[audioID]);
         audioSources[audioID].Pause();
     }
 
@@ -138,6 +142,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("Now Stopping: " + audioClips[audioID]);
         audioSources[audioID].Stop();
     }
 

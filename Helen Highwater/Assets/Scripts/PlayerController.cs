@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public int playerId = 0; // The Rewired player ID (for a single player game, should always be 0)
     private Rewired.Player player; // The Rewired Player
 
+    // Integers to store looping SFX indexes
+    private int helenRunID;
+
 
     //Player states for all actions so far. i have a different rising and falling state in case we want to change the gravity to make the platforming feel better,
     enum state
@@ -50,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        helenRunID = AudioManager.Instance.AddAudio("helenRun");
+
         // Get Rewired Player
         player = ReInput.players.GetPlayer(playerId);
 
@@ -91,7 +96,6 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
                 lastDirection = Mathf.Sign(direction); // Update last facing direction
                 
-
                 if (isGrounded)
                 {
                     playerState = state.run;
@@ -117,6 +121,15 @@ public class PlayerController : MonoBehaviour
                     playerState = state.idle;
                 }
             }
+        }
+
+        if(playerState == state.run)
+        {
+            AudioManager.Instance.PlayAudio(helenRunID);
+        }
+        else
+        {
+            AudioManager.Instance.StopAudio(helenRunID);
         }
     }
 
