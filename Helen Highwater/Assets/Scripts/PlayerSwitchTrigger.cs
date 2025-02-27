@@ -6,8 +6,8 @@ public class PlayerSwitchTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the player entered the trigger
-        if (other.CompareTag("Player - Helen")) // Ensure Helen has the tag "Helen"
+        // check if the player enters the trigger
+        if (other.CompareTag("Player - Helen"))
         {
             Debug.Log("Player Switch Triggered");
 
