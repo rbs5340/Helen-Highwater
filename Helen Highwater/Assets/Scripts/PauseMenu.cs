@@ -12,11 +12,18 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseButton;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
+    public GameObject controlChangeMenu;
 
     //Text sliders
     public TextMeshProUGUI masterText;
     public TextMeshProUGUI musicText;
     public TextMeshProUGUI sfxText;
+
+    //Controls Change Objects
+    public GameObject controlButton;
+    public TextMeshProUGUI controlName;
+    public TextMeshProUGUI oldKey;
+    public TextMeshProUGUI newKey;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +34,15 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
+        if (controlChangeMenu.activeSelf == true)
+        {
+            KeyCode currentKey = getCurrentKeyDown();
+            if(currentKey != KeyCode.None && currentKey != KeyCode.Mouse0)
+            {
+                controlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text=currentKey.ToString();
+                controlChangeMenu.SetActive(false);
+            }
+        }
     }
 
     public void Pause()
@@ -86,4 +101,23 @@ public class PauseMenu : MonoBehaviour
         sfxText.text = (int)(value * 100) + "%";
     }
 
+    public void controlButtonPressed(GameObject button)
+    {
+        TextMeshProUGUI buttonText = button.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        controlButton = button;
+        controlName.text = button.name;
+        oldKey.text = buttonText.text;
+        controlChangeMenu.SetActive(true);
+    }
+
+    public KeyCode getCurrentKeyDown()
+    {
+        KeyCode finalKeyCode = KeyCode.None;
+        foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode))) { if (Input.GetKeyDown(kcode)) { finalKeyCode = kcode; } }
+        if (finalKeyCode == KeyCode.None)
+        {
+            //Couldn't find key
+        }
+        return finalKeyCode;
+    }
 }
