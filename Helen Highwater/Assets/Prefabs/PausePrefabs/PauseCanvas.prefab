@@ -5469,6 +5469,9 @@ MonoBehaviour:
   controlName: {fileID: 4049120634283674670}
   oldKey: {fileID: 2901640356045361184}
   newKey: {fileID: 0}
+  masterSlider: {fileID: 305653483966532655}
+  musicSlider: {fileID: 6000554388462517505}
+  sfxSlider: {fileID: 2735999177788906266}
 --- !u!1 &7837341491019232380
 GameObject:
   m_ObjectHideFlags: 0

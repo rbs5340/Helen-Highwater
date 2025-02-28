@@ -25,10 +25,18 @@ public class PauseMenu : MonoBehaviour
     public TextMeshProUGUI oldKey;
     public TextMeshProUGUI newKey;
 
+    // Volume Sliders
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Initializes slider values
+        masterSlider.value = AudioManager.Instance.masterVolume;
+        musicSlider.value = AudioManager.Instance.musicVolume;
+        sfxSlider.value = AudioManager.Instance.sfxVolume;
     }
 
     // Update is called once per frame
@@ -54,18 +62,21 @@ public class PauseMenu : MonoBehaviour
         }
         pauseButton.SetActive(false);
         pauseMenu.SetActive(true);
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
     public void OpenOptions()
     {
         optionsMenu.SetActive(true);
         pauseMenu.SetActive(false);
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
     public void CloseOptions()
     {
         optionsMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
     public void Resume()
@@ -77,12 +88,14 @@ public class PauseMenu : MonoBehaviour
         }
         pauseButton.SetActive(true);
         pauseMenu.SetActive(false);
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
     public void Home()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu");
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
     public void SetMasterVolume(System.Single value)
