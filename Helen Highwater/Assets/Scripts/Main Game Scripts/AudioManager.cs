@@ -126,6 +126,8 @@ public class AudioManager : MonoBehaviour
         }
 
         Debug.Log("Now Playing: " + audioClips[audioID].name);
+        // Adjusts the volume and plays the sound effect
+        audioSources[audioID].volume = masterVolume * sfxVolume;
         audioSources[audioID].Play();
     }
 
