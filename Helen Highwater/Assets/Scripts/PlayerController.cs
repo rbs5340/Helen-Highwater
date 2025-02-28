@@ -35,11 +35,12 @@ public class PlayerController : MonoBehaviour
     public float jumpStrength = 8f;
     public float decelerationFactor = 0.9f;
     public float dashDecelerationFactor = 0.75f;
+    public int health = 3;
 
     [Header("Attack Settings")]
     public GameObject WrenchPrefab;
     public Transform attackSpawnPoint;
-    public float attackAnimationTimer;
+    private float attackAnimationTimer;
 
     private bool isGrounded;
     private float attackTimer;
@@ -48,8 +49,11 @@ public class PlayerController : MonoBehaviour
     private float direction;
     private state playerState;
 
-    public float dashTimer = 0.5f;
+    private float dashTimer = 0.5f;
     private float decelerate;
+
+    private float damagedTimer;
+    float knockbackAngle;
 
     private void Start()
     {
@@ -72,10 +76,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        
         HandleMovement();
-        HandleJumping();
-        HandleAttack();
-        HandleDash();
+        if (playerState != state.damaged)
+        {
+            HandleJumping();
+            HandleAttack();
+            HandleDash();
+        }
 
         //Logs player game state for testing purposes
         //Debug.Log(playerState.ToString());
@@ -86,7 +94,16 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (playerState != state.dash)
+        if (playerState == state.damaged)
+        {
+            damagedTimer -= Time.deltaTime;
+            if (damagedTimer < 0)
+            {
+                playerState = state.idle;
+            }
+            
+        }
+        if (playerState != state.dash && playerState != state.damaged)
         {
             direction = player.GetAxis("MoveHorizontal");
 
@@ -135,6 +152,7 @@ public class PlayerController : MonoBehaviour
                 AudioManager.Instance.StopAudio(helenRunID);
             }
         }
+        
     }
 
     private void HandleJumping()
@@ -227,17 +245,44 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(collision.gameObject.ToString());
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            isGrounded = true;
-            dashAvailable = true;
-            if (Mathf.Abs(rb.velocity.x) > 0)
+
+            damagedTimer = 1f;
+            playerState = state.damaged;
+            health -= 1;
+            if (health <= 0)
             {
-                playerState = state.run;
+                Debug.Log("YOU DIED");
+            }
+            
+            if (collision.gameObject.transform.position.x > rb.position.x)
+            {
+                knockbackAngle = -1f;
             }
             else
             {
-                playerState = state.idle;
+                knockbackAngle = 1f;
+            }
+
+            rb.velocity = new Vector2(knockbackAngle, 3f);
+
+        }
+        
+        else if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            dashAvailable = true;
+            if (playerState != state.damaged)
+            {
+                if (Mathf.Abs(rb.velocity.x) > 0)
+                {
+                    playerState = state.run;
+                }
+                else
+                {
+                    playerState = state.idle;
+                }
             }
         }
     }

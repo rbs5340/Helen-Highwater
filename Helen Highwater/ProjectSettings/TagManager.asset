@@ -8,6 +8,7 @@ TagManager:
   - Wrench
   - Player - Helen
   - Player - Mech
+  - Enemy
   layers:
   - Default
   - TransparentFX
