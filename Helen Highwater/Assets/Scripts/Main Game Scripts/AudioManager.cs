@@ -30,9 +30,9 @@ public class AudioManager : MonoBehaviour
     // Used to handle all one shot sound effects
     [SerializeField] private AudioSource source;
     // Determines the volume (0.0f to 1.0f)
-    private float masterVolume;
-    private float musicVolume;
-    private float sfxVolume;
+    public float masterVolume;
+    public float musicVolume;
+    public float sfxVolume;
 
     // List of all looping audio files
     private List<AudioClip> audioClips = new List<AudioClip>();
@@ -62,6 +62,9 @@ public class AudioManager : MonoBehaviour
         // Testing junk
         musicSFX = AddAudio("weezerRiff");
         //PlayAudio(musicSFX);
+
+        // Don't destroy this object on load
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
