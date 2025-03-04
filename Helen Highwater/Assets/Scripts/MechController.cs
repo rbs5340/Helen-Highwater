@@ -181,7 +181,7 @@ public class MechController : MonoBehaviour
                 hoverTimer -= Time.deltaTime;
                 if (rb.velocity.y <= 0f)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, 0f);
+                    rb.velocity = new Vector2(rb.velocity.x, 0.3f); //I made this 0.3 to counteract gravity or something idk but it works
                 }
 
             }

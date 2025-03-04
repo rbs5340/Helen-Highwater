@@ -192,10 +192,9 @@ MonoBehaviour:
   jumpStrength: 5
   decelerationFactor: 0.9
   dashDecelerationFactor: 0.75
+  health: 3
   WrenchPrefab: {fileID: 3922443426349042702, guid: f3793ff62ddba3842ad7f4b46577f0ce, type: 3}
   attackSpawnPoint: {fileID: 4080713300660254439}
-  attackAnimationTimer: 0
-  dashTimer: 0.5
 --- !u!50 &5117369341553324894
 Rigidbody2D:
   serializedVersion: 4
@@ -212,7 +211,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4f7b35f1da537784781ed0160456f40b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
