@@ -32,24 +32,4 @@ public class UIManager : MonoBehaviour
         Application.Quit();
         Debug.Log("Game Exit");
     }
-
-    /*
-    public void OpenOptions()
-    {
-        AudioManager.Instance.PlaySoundEffect("buttonPress");
-        optionsMenu.SetActive(true);
-    }
-
-    public void CloseOptions()
-    {
-        AudioManager.Instance.PlaySoundEffect("buttonPress");
-        optionsMenu.SetActive(false);
-    }
-
-    public void OpenControls()
-    {
-        AudioManager.Instance.PlaySoundEffect("buttonPress");
-        controlChangeMenu.SetActive(true);
-    }
-    */
 }

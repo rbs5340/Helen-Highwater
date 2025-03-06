@@ -3132,12 +3132,13 @@ namespace Rewired.UI.ControlMapper
         public void Open() {
             Open(false);
         }
-        private void Open(bool force) {
+        public void Open(bool force) {
             if(!initialized) Initialize();
             if(!initialized) return; // failed to init
             if(!force && isOpen) return;
             Clear();
-            if(Instance == null) Instance = this; // set the singleton
+            AudioManager.Instance.PlaySoundEffect("buttonPress");
+            if (Instance == null) Instance = this; // set the singleton
             canvas.SetActive(true);
             OnPlayerSelected(0, false);
             SelectDefaultMapCategory(false);
@@ -3154,6 +3155,7 @@ namespace Rewired.UI.ControlMapper
                 if(ReInput.userDataStore != null) ReInput.userDataStore.Save();
             }
             Clear();
+            AudioManager.Instance.PlaySoundEffect("buttonPress");
             canvas.SetActive(false);
             SetUISelection(null); // deselect
             if(Instance == this) Instance = null; // clear the singleton

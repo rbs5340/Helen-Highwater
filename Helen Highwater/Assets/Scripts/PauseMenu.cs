@@ -27,10 +27,7 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initializes slider values
-        masterSlider.value = AudioManager.Instance.masterVolume;
-        musicSlider.value = AudioManager.Instance.musicVolume;
-        sfxSlider.value = AudioManager.Instance.sfxVolume;
+        
     }
 
     // Update is called once per frame
@@ -53,8 +50,11 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenOptions()
     {
+        masterSlider.value = AudioManager.Instance.masterVolume;
+        musicSlider.value = AudioManager.Instance.musicVolume;
+        sfxSlider.value = AudioManager.Instance.sfxVolume;
         optionsMenu.SetActive(true);
-        if (pauseButton != null)
+        if (pauseMenu != null)
         {
             pauseMenu.SetActive(false);
         }
@@ -64,7 +64,10 @@ public class PauseMenu : MonoBehaviour
     public void CloseOptions()
     {
         optionsMenu.SetActive(false);
-        pauseMenu.SetActive(true);
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }   
         AudioManager.Instance.PlaySoundEffect("buttonPress");
     }
 
