@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     // Integers to store looping SFX indexes
     private int helenRunID;
 
-
     //Player states for all actions so far. i have a different rising and falling state in case we want to change the gravity to make the platforming feel better,
     enum state
     {
@@ -257,9 +256,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log(collision.gameObject.ToString());
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
             damagedTimer = 1f;
             playerState = state.damaged;
+            // Plays the hit effect and logs the player state
+            AudioManager.Instance.PlaySoundEffect("helenHit");
+            Debug.Log("Current State: " + playerState);
             health -= 1;
             if (health <= 0)
             {
