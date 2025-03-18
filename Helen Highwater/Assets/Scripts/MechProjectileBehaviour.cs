@@ -6,7 +6,9 @@ public class MechProjectileBehaviour : MonoBehaviour
     public float flightSpeed = 10f;  // speed of movement
     public float lifetime = 5f;      // time before self-destruction
 
+    public float gravity = 0.001f; //gravity WIP
     private float direction = 1f;    // default: right
+    private float fallSpeed = 0;
 
     public void Initialize(float dir)
     {
@@ -16,6 +18,6 @@ public class MechProjectileBehaviour : MonoBehaviour
 
     private void Update()
     {
-        transform.position += Vector3.right * direction * flightSpeed * Time.deltaTime;
+        transform.position += new Vector3(1, Time.deltaTime * gravity, 0)* direction * flightSpeed * Time.deltaTime;
     }
 }
