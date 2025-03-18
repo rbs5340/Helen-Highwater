@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     // Integers to store looping SFX indexes
     private int helenRunID;
 
-
     //Player states for all actions so far. i have a different rising and falling state in case we want to change the gravity to make the platforming feel better,
     enum state
     {
@@ -55,6 +54,8 @@ public class PlayerController : MonoBehaviour
     private float damagedTimer;
     float knockbackAngle;
 
+    private Vector2 spawnLocation;
+
     private void Start()
     {
         // Loads in Helen's run audio
@@ -65,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
         // Get Rigidbody2D
         rb = GetComponent<Rigidbody2D>();
+
+        spawnLocation = rb.position;
 
         playerState = state.idle;
 
@@ -83,6 +86,12 @@ public class PlayerController : MonoBehaviour
             HandleJumping();
             HandleAttack();
             HandleDash();
+        }
+
+        if(rb.position.y < -7)
+        {
+            rb.position = spawnLocation;
+            rb.velocity = Vector3.zero;
         }
 
         //Logs player game state for testing purposes
@@ -247,9 +256,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log(collision.gameObject.ToString());
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
             damagedTimer = 1f;
             playerState = state.damaged;
+            // Plays the hit effect and logs the player state
+            AudioManager.Instance.PlaySoundEffect("helenHit");
+            Debug.Log("Current State: " + playerState);
             health -= 1;
             if (health <= 0)
             {
@@ -291,7 +302,7 @@ public class PlayerController : MonoBehaviour
     //Checks for collision with the wrench trigger for the parry jump
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == 11 && playerState == state.dash)
+        if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
         {
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);

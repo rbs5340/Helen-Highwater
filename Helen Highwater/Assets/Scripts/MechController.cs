@@ -48,6 +48,8 @@ public class MechController : MonoBehaviour
     private int mechRunID;
     private int mechHoverID;
 
+    private Vector2 spawnLocation;
+
     private void Start()
     {
         // Get Rewired Player
@@ -55,6 +57,8 @@ public class MechController : MonoBehaviour
 
         // Get Rigidbody2D
         rb = GetComponent<Rigidbody2D>();
+
+        spawnLocation = rb.position;
 
         playerState = state.idle;
 
@@ -73,6 +77,13 @@ public class MechController : MonoBehaviour
         HandleJumping();
         HandleAttack();
         HandleHover(); //HOVER TEST
+
+        //Handles respawning
+        if (rb.position.y < -7)
+        {
+            rb.position = spawnLocation;
+            rb.velocity = Vector3.zero;
+        }
 
         //Logs player game state for testing purposes
         //Debug.Log(playerState.ToString());

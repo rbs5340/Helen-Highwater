@@ -12,11 +12,10 @@ public class Enemy : MonoBehaviour
     private int timer; // Number of frames the enemy will pause for
     private bool edgeOfPlat; // Whether or not the enemy has reached the end of the platform
     private bool isAlive; // Is this enemy alive or not
+    private bool firstMove; // Used to invoke code when this enemy first moves
 
-    private Camera gameCamera; // The game camera
-    // I intend to use the camera bounds to despawn the enemy when it is dead
-    // and off screen. Might also use it to deactivate entities that are offscreen
-    // if performance issues arise, but that is not yet necessary.
+    // Integers to store looping SFX indexes
+    private int crabWalkID;
 
     // Start is called before the first frame update
     void Start()
@@ -44,12 +43,10 @@ public class Enemy : MonoBehaviour
         timer = timerValue;
         edgeOfPlat = false;
         isAlive = true;
+        firstMove = false;
 
-        // Initializes game camera
-        gameCamera = Camera.main;
-
-        // Starts playing walking sound effect (Doesn't appear to work on startup)
-        AudioManager.Instance.PlaySoundEffect("audioClip1");
+        // Loads crabWalk SFX
+        crabWalkID = AudioManager.Instance.AddAudio("crabWalk2");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,6 +59,7 @@ public class Enemy : MonoBehaviour
             timer = 0;
             edgeOfPlat = true;
             //Debug.Log("Timer started");
+            AudioManager.Instance.StopAudio(crabWalkID);
         }
 
         // If enemt collides with hazard (lava)
@@ -92,7 +90,7 @@ public class Enemy : MonoBehaviour
                 edgeOfPlat = false;
 
                 // Starts playing walking sound effect (This one works fine)
-                AudioManager.Instance.PlaySoundEffect("audioClip1");
+                AudioManager.Instance.PlayAudio(crabWalkID);
             }
         }
     }
@@ -109,6 +107,13 @@ public class Enemy : MonoBehaviour
         {
             // Moves forward (thats it)
             transform.position = transform.position + new Vector3(speed, 0f, 0f);
+
+            // Plays the walk sound effect if this is the first time the crab has moved
+            if (!firstMove)
+            {
+                AudioManager.Instance.PlayAudio(crabWalkID);
+                firstMove = true;
+            }
         }
         else
         {

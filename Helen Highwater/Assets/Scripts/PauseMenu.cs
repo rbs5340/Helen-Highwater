@@ -100,15 +100,20 @@ public class PauseMenu : MonoBehaviour
     {
         AudioManager.Instance.SetMaster(value);
         masterText.text = (int)(value * 100) + "%";
+        AudioManager.Instance.PlaySoundEffect("volumeSlider");
     }
     public void SetMusicVolume(System.Single value)
     {
         AudioManager.Instance.SetMusic(value);
         musicText.text = (int)(value * 100) + "%";
+        // Currently this effect doesn't get quieter as the volume decreases,
+        // While the other two do, can fix this by making this sound scale with music volume
+        AudioManager.Instance.PlaySoundEffect("volumeSlider");
     }
     public void SetSfxVolume(System.Single value)
     {
         AudioManager.Instance.SetSFX(value);
         sfxText.text = (int)(value * 100) + "%";
+        AudioManager.Instance.PlaySoundEffect("volumeSlider");
     }
 }
