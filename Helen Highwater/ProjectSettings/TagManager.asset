@@ -9,6 +9,7 @@ TagManager:
   - Player - Helen
   - Player - Mech
   - Enemy
+  - Object
   layers:
   - Default
   - TransparentFX
