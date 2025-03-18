@@ -186,10 +186,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 0
-  moveSpeed: 5
-  dashSpeed: {x: 10, y: 2}
+  moveSpeed: 6
+  dashSpeed: {x: 9, y: 2.5}
   dashVerticleSpeed: 2
-  jumpStrength: 5
+  jumpStrength: 5.5
   decelerationFactor: 0.9
   dashDecelerationFactor: 0.75
   health: 3

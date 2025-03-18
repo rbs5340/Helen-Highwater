@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public Vector2 dashSpeed = new Vector2(10f, 2f);
-    public float dashVerticleSpeed = 2f;
     public float jumpStrength = 8f;
     public float decelerationFactor = 0.9f;
     public float dashDecelerationFactor = 0.75f;
@@ -133,7 +132,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 // Apply deceleration
-                //Decelerates more during the ending of the parry state when your velocity is higher than your regular movement speed
+                //Decelerates more during the ending of the dash state when your velocity is higher than your regular movement speed
                 if (Mathf.Abs(rb.velocity.x) < moveSpeed) { 
                     decelerate = decelerationFactor;
                 }
