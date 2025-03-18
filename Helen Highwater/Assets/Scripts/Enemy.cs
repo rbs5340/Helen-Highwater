@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private bool edgeOfPlat; // Whether or not the enemy has reached the end of the platform
     private bool isAlive; // Is this enemy alive or not
     private bool firstMove; // Used to invoke code when this enemy first moves
+    private bool isMoving; // Is the crab still moving?
 
     // Integers to store looping SFX indexes
     private int crabWalkID;
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour
         edgeOfPlat = false;
         isAlive = true;
         firstMove = false;
+        isMoving = true;
 
         // Loads crabWalk SFX
         crabWalkID = AudioManager.Instance.AddAudio("crabWalk2");
@@ -62,9 +64,24 @@ public class Enemy : MonoBehaviour
             AudioManager.Instance.StopAudio(crabWalkID);
         }
 
-        // If enemt collides with hazard (lava)
+        // If enemy collides with hazard (lava) or wrench
         if(collision.gameObject.layer == 9)
         {
+            EnemyDeath();
+        }
+
+        if(!isAlive && collision.gameObject.layer == 7)
+        {
+            isMoving = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Destroys the enemy when the wrench collides with it
+        if (collision.gameObject.layer == 11 && isAlive)
+        {
+            AudioManager.Instance.StopAudio(crabWalkID);
             EnemyDeath();
         }
     }
@@ -90,7 +107,9 @@ public class Enemy : MonoBehaviour
                 edgeOfPlat = false;
 
                 // Starts playing walking sound effect (This one works fine)
-                AudioManager.Instance.PlayAudio(crabWalkID);
+                if (isAlive) {
+                    AudioManager.Instance.PlayAudio(crabWalkID);
+                }
             }
         }
     }
@@ -115,10 +134,10 @@ public class Enemy : MonoBehaviour
                 firstMove = true;
             }
         }
-        else
+        else if(isMoving)
         {
             // Drop down (thats it again)
-            transform.position = transform.position + new Vector3(0f, -(speed), 0f);
+            transform.position = transform.position + new Vector3(0f, -(speed/2), 0f);
         }
         
         // Stabilize rotation of the z axis
@@ -142,9 +161,15 @@ public class Enemy : MonoBehaviour
         Vector3 enemyScale = transform.localScale;
         enemyScale.y = enemyScale.y * -1f;
         transform.localScale = enemyScale;
-        
+
+        // Pops the enemy up a bit to prevent weird collision
+        transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
+
         // Disables the collider
-        myCollider.enabled = false;
+        //myCollider.enabled = false;
+
+        // Changes the tag to prevent Helen from getting hit
+        gameObject.tag = "Object";
 
         // Placeholder death sound effect
         AudioManager.Instance.PlaySoundEffect("audioClip2");

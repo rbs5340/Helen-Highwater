@@ -143,7 +143,8 @@ public class PlayerController : MonoBehaviour
                 }
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
-                if (rb.velocity.x == 0f && isGrounded)
+                // Raised velocity threshold to fix run audio issue -Will
+                if (rb.velocity.x <= 0.010f && isGrounded)
                 {
                     playerState = state.idle;
                 }
