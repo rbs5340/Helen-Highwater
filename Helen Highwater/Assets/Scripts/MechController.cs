@@ -25,7 +25,7 @@ public class MechController : MonoBehaviour
 
     [Header("Movement Settings")]
     public float moveSpeed = 3f;
-    public float jumpStrength = 3f;
+    public float jumpStrength = 100f;
     public float decelerationFactor = 0.9f;
 
     [Header("Attack Settings")]
@@ -159,7 +159,7 @@ public class MechController : MonoBehaviour
         }
 
         // If attacking, keep the state as wrenchThrow
-        if (player.GetButton("Attack"))
+        if (player.GetButton("Attack") && playerState != state.hover)
         {
             playerState = state.wrenchThrow;
         }
