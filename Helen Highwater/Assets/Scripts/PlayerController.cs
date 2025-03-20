@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
             playerState = state.dash;
             dashTimer = 0.5f;
             isGrounded = false;
-            rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y);
+            rb.velocity = new Vector2(dashSpeed.x * lastDirection, dashSpeed.y);
         }
     }
 
@@ -229,6 +229,8 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
+                rb.position = spawnLocation;
+                rb.velocity = Vector3.zero;
             }
 
             knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
