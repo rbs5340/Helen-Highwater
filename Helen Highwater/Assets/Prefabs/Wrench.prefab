@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flightSpeed: 10
-  maxDistance: 5
+  maxDistance: 3
   pauseTime: 1
 --- !u!61 &4542060978680588264
 BoxCollider2D:

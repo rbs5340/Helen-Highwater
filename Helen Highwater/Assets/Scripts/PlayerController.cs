@@ -260,14 +260,30 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PauseMidAir()
     {
         isPausedMidAir = true;
-        Vector2 storedVelocity = rb.velocity; // Save current velocity
-        rb.velocity = Vector2.zero; // Stop movement briefly
-        rb.gravityScale = 0; // Disable gravity
+        Vector2 storedVelocity = rb.velocity; // save current velocity
+        rb.velocity = Vector2.zero; // stop movement
+        rb.gravityScale = 0; // disable gravity
 
-        yield return new WaitForSeconds(attackPauseDuration);
+        float timer = attackPauseDuration;
+        while (timer > 0)
+        {
+            if (player.GetButtonDown("Dash") && dashAvailable)
+            {
+                // let player dash out of the airstop
+                rb.gravityScale = 1; // restore gravity
+                isPausedMidAir = false;
+                HandleDash(); // immediately dash
+                yield break; // exit coroutine
+            }
 
-        rb.gravityScale = 1; // Restore gravity
-        rb.velocity = storedVelocity; // Restore movement
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        // restore normal movement
+        rb.gravityScale = 1;
+        rb.velocity = storedVelocity;
         isPausedMidAir = false;
     }
+
 }
