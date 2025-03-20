@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class WrenchBehaviour : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class WrenchBehaviour : MonoBehaviour
     public float flightSpeed = 10f;  // speed of movement
     public float maxDistance = 5f;   // distance before returning
     public float pauseTime = 0.5f;   // time at peak before returning
+
+    public Action OnDestroyCallback;
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
@@ -50,5 +53,8 @@ public class WrenchBehaviour : MonoBehaviour
             yield return null;
         }
     }
-
+    private void OnDestroy()
+    {
+        OnDestroyCallback?.Invoke(); // Notify PlayerController
+    }
 }

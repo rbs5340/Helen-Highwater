@@ -6,13 +6,10 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
-    public int playerId = 0; // The Rewired player ID (for a single player game, should always be 0)
-    private Rewired.Player player; // The Rewired Player
-
-    // Integers to store looping SFX indexes
+    public int playerId = 0;
+    private Rewired.Player player;
     private int helenRunID;
 
-    //Player states for all actions so far. i have a different rising and falling state in case we want to change the gravity to make the platforming feel better,
     enum state
     {
         idle,
@@ -24,13 +21,12 @@ public class PlayerController : MonoBehaviour
         dash,
         parry
     }
-    
+
     private Rigidbody2D rb;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public Vector2 dashSpeed = new Vector2(10f, 2f);
-    public float dashVerticleSpeed = 2f;
     public float jumpStrength = 8f;
     public float decelerationFactor = 0.9f;
     public float dashDecelerationFactor = 0.75f;
@@ -44,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float attackTimer;
     private bool dashAvailable;
-     
+
     private float direction;
     private state playerState;
 
@@ -55,20 +51,21 @@ public class PlayerController : MonoBehaviour
     float knockbackAngle;
 
     private Vector2 spawnLocation;
+    private GameObject activeWrench;
+
+    private float lastDirection = 1f;
+
+    [Header("Attack Pause Settings")]
+    public float attackPauseDuration = 0.2f; // How long the player pauses in midair
+    private bool isPausedMidAir = false; // Prevents movement during the pause
 
     private void Start()
     {
-        // Loads in Helen's run audio
         helenRunID = AudioManager.Instance.AddAudio("helenRun2");
-
-        // Get Rewired Player
         player = ReInput.players.GetPlayer(playerId);
-
-        // Get Rigidbody2D
         rb = GetComponent<Rigidbody2D>();
 
         spawnLocation = rb.position;
-
         playerState = state.idle;
 
         if (!rb)
@@ -79,27 +76,23 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
-        HandleMovement();
-        if (playerState != state.damaged)
+        if (!isPausedMidAir) // Prevent movement updates while paused
         {
-            HandleJumping();
-            HandleAttack();
-            HandleDash();
+            HandleMovement();
+            if (playerState != state.damaged)
+            {
+                HandleJumping();
+                HandleAttack();
+                HandleDash();
+            }
         }
 
-        if(rb.position.y < -7)
+        if (rb.position.y < -7)
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
         }
-
-        //Logs player game state for testing purposes
-        //Debug.Log(playerState.ToString());
-        
     }
-
-    private float lastDirection = 1f; // 1 for right, -1 for left
 
     private void HandleMovement()
     {
@@ -110,40 +103,27 @@ public class PlayerController : MonoBehaviour
             {
                 playerState = state.idle;
             }
-            
         }
+
         if (playerState != state.dash && playerState != state.damaged)
         {
             direction = player.GetAxis("MoveHorizontal");
 
-            if (Mathf.Abs(direction) > 0.1f && Mathf.Abs(rb.velocity.x) < moveSpeed) // small dead zone to prevent jitter
-
+            if (Mathf.Abs(direction) > 0.1f && Mathf.Abs(rb.velocity.x) < moveSpeed)
             {
-                //Debug.Log(Mathf.Abs(rb.velocity.x));
                 rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
-                lastDirection = Mathf.Sign(direction); // Update last facing direction
-                
+                lastDirection = Mathf.Sign(direction);
+
                 if (isGrounded)
                 {
                     playerState = state.run;
                 }
-
             }
             else
             {
-
-                // Apply deceleration
-                //Decelerates more during the ending of the parry state when your velocity is higher than your regular movement speed
-                if (Mathf.Abs(rb.velocity.x) < moveSpeed) { 
-                    decelerate = decelerationFactor;
-                }
-                else
-                {
-                    decelerate = dashDecelerationFactor;
-                }
+                decelerate = (Mathf.Abs(rb.velocity.x) < moveSpeed) ? decelerationFactor : dashDecelerationFactor;
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
-                // Raised velocity threshold to fix run audio issue -Will
                 if (rb.velocity.x <= 0.01f && isGrounded)
                 {
                     playerState = state.idle;
@@ -151,7 +131,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(playerState == state.run)
+        if (playerState == state.run)
         {
             AudioManager.Instance.PlayAudio(helenRunID);
         }
@@ -162,20 +142,18 @@ public class PlayerController : MonoBehaviour
                 AudioManager.Instance.StopAudio(helenRunID);
             }
         }
-        
     }
 
     private void HandleJumping()
     {
         if (player.GetButtonDown("Jump") && isGrounded)
-
         {
             AudioManager.Instance.PlaySoundEffect("helenJump");
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
             playerState = state.rise;
         }
-        if(rb.velocity.y < 0f && playerState != state.dash)
+        if (rb.velocity.y < 0f && playerState != state.dash)
         {
             playerState = state.fall;
             isGrounded = false;
@@ -186,121 +164,84 @@ public class PlayerController : MonoBehaviour
     {
         if (player.GetButtonDown("Attack") && WrenchPrefab && attackSpawnPoint && playerState != state.dash)
         {
-            attackTimer = attackAnimationTimer;
-
-            GameObject wrench = Instantiate(WrenchPrefab, attackSpawnPoint.position, Quaternion.identity);
-            WrenchBehaviour wrenchScript = wrench.GetComponent<WrenchBehaviour>();
-            AudioManager.Instance.PlaySoundEffect("wrenchThrow");
-
-            if (wrenchScript)
+            if (activeWrench == null)
             {
-                wrenchScript.Initialize(lastDirection, transform);
+                attackTimer = attackAnimationTimer;
+
+                activeWrench = Instantiate(WrenchPrefab, attackSpawnPoint.position, Quaternion.identity);
+                WrenchBehaviour wrenchScript = activeWrench.GetComponent<WrenchBehaviour>();
+                AudioManager.Instance.PlaySoundEffect("wrenchThrow");
+
+                if (wrenchScript)
+                {
+                    wrenchScript.Initialize(lastDirection, transform);
+                    wrenchScript.OnDestroyCallback = OnWrenchDestroyed;
+                }
+
+                // Start the midair pause effect
+                if (!isGrounded)
+                {
+                    StartCoroutine(PauseMidAir());
+                }
             }
         }
 
-        //Handles wrench throwing state, should trump every other game state animation wise
         if (attackTimer > 0)
         {
             playerState = state.wrenchThrow;
-            attackTimer -= Time.deltaTime;  
+            attackTimer -= Time.deltaTime;
         }
     }
 
     private void HandleDash()
     {
-        //Debug.Log(dashTimer);
-        //Will keep the player's momentum while in dash state and increment the timer
-        if(playerState == state.dash)
+        if (playerState == state.dash)
         {
-
             if (dashTimer > 0)
             {
                 dashTimer -= Time.deltaTime;
-                if (rb.velocity.x >= 0f)
-                {
-                    rb.velocity = new Vector2(dashSpeed.x, rb.velocity.y);
-                }
-                else
-                {
-                    rb.velocity = new Vector2(dashSpeed.x * -1, rb.velocity.y);
-                }
-
+                rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y);
             }
             else
             {
                 playerState = state.fall;
             }
         }
-
-        //Will begin the dash if not already in dash state and the button is pressed
         else if (player.GetButtonDown("Dash") && dashAvailable)
         {
             dashAvailable = false;
             playerState = state.dash;
             dashTimer = 0.5f;
             isGrounded = false;
-            if (rb.velocity.x >= 0f)
-            {
-                rb.velocity = dashSpeed;
-            }
-            else
-            {
-                rb.velocity = dashSpeed * new Vector2(-1f, 1f);
-            }
-
+            rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y);
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.ToString());
         if (collision.gameObject.CompareTag("Enemy"))
         {
             damagedTimer = 1f;
             playerState = state.damaged;
-            // Plays the hit effect and logs the player state
             AudioManager.Instance.PlaySoundEffect("helenHit");
-            Debug.Log("Current State: " + playerState);
             health -= 1;
+
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
             }
-            
-            if (collision.gameObject.transform.position.x > rb.position.x)
-            {
-                knockbackAngle = -1f;
-            }
-            else
-            {
-                knockbackAngle = 1f;
-            }
 
+            knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
             rb.velocity = new Vector2(knockbackAngle, 3f);
-
         }
-        
         else if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
             dashAvailable = true;
-            if (playerState != state.damaged)
-            {
-                if (Mathf.Abs(rb.velocity.x) > 0)
-                {
-                    playerState = state.run;
-                }
-                else
-                {
-                    playerState = state.idle;
-                }
-            }
+            playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
         }
     }
 
-
-    //Checks for collision with the wrench trigger for the parry jump
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
@@ -309,6 +250,24 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
         }
+    }
 
+    private void OnWrenchDestroyed()
+    {
+        activeWrench = null;
+    }
+
+    private IEnumerator PauseMidAir()
+    {
+        isPausedMidAir = true;
+        Vector2 storedVelocity = rb.velocity; // Save current velocity
+        rb.velocity = Vector2.zero; // Stop movement briefly
+        rb.gravityScale = 0; // Disable gravity
+
+        yield return new WaitForSeconds(attackPauseDuration);
+
+        rb.gravityScale = 1; // Restore gravity
+        rb.velocity = storedVelocity; // Restore movement
+        isPausedMidAir = false;
     }
 }

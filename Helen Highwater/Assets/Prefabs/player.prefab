@@ -188,13 +188,13 @@ MonoBehaviour:
   playerId: 0
   moveSpeed: 6
   dashSpeed: {x: 9, y: 2.5}
-  dashVerticleSpeed: 2
   jumpStrength: 5.5
   decelerationFactor: 0.9
   dashDecelerationFactor: 0.75
   health: 3
   WrenchPrefab: {fileID: 3922443426349042702, guid: f3793ff62ddba3842ad7f4b46577f0ce, type: 3}
   attackSpawnPoint: {fileID: 4080713300660254439}
+  attackPauseDuration: 0.4
 --- !u!50 &5117369341553324894
 Rigidbody2D:
   serializedVersion: 4
