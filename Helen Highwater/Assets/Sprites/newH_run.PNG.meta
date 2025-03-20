@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ee66eb619c851e478cfdeff2328b76d
+guid: 8e86954d3f210a84ba61b97501d24087
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 252
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: H_jumpRoughTrans_0
+      name: newH_run_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4faeace7e764d3744a5f338ea86f7f96
-      internalID: 971814644
+      spriteID: a4714e57e46af0a419ea75cb734c0ab2
+      internalID: 1116282014
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_1
+      name: newH_run_1
       rect:
         serializedVersion: 2
         x: 256
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb9d627a186688745b6dc6767eaf3a54
-      internalID: 96005265
+      spriteID: d21b23e76f3beca418d01c0994aff050
+      internalID: 303283907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_2
+      name: newH_run_2
       rect:
         serializedVersion: 2
         x: 512
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e65d5217bea0cc41af2c5311876d43e
-      internalID: 715327638
+      spriteID: 8370c7ae5c28f3441a5691cdc6b238a0
+      internalID: -1929978604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_3
+      name: newH_run_3
       rect:
         serializedVersion: 2
         x: 768
@@ -213,14 +213,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20e8f3168231c8e4a9dfab17377bd1dd
-      internalID: -1122945629
+      spriteID: ec2c0b3598f19ff4d94c2acfe48b61b0
+      internalID: -2055220648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_4
+      name: newH_run_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -234,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cee644e4dd72674d9ae1e7ff11cad7a
-      internalID: 63295641
+      spriteID: 03a8003749bf69d409ba27e2d20a4f2b
+      internalID: -1287601895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_5
+      name: newH_run_5
       rect:
         serializedVersion: 2
         x: 0
@@ -255,14 +255,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cacc16cccfa7d3e4687396ad67823934
-      internalID: -1415060616
+      spriteID: ef60e9d8f63a0374992e9f259fc27531
+      internalID: 1048761093
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: H_jumpRoughTrans_6
+      name: newH_run_6
       rect:
         serializedVersion: 2
         x: 256
@@ -276,71 +276,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38e4e86cc0fb841489a1dfd2e3cff6bd
-      internalID: -2032884875
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: H_jumpRoughTrans_7
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3628eba2efbe68c4daa8d269b8b9de2b
-      internalID: -1034556701
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: H_jumpRoughTrans_8
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 450a3d7d1a5f6404eb8f1963ee850045
-      internalID: 1299672189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: H_jumpRoughTrans_9
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96073889d8ac96e41a0995e73cbe5dfb
-      internalID: 883231558
+      spriteID: 83c1d5796a425e645b17b8ce8edb8503
+      internalID: -931202337
       vertices: []
       indices: 
       edges: []
@@ -356,16 +293,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      H_jumpRoughTrans_0: 971814644
-      H_jumpRoughTrans_1: 96005265
-      H_jumpRoughTrans_2: 715327638
-      H_jumpRoughTrans_3: -1122945629
-      H_jumpRoughTrans_4: 63295641
-      H_jumpRoughTrans_5: -1415060616
-      H_jumpRoughTrans_6: -2032884875
-      H_jumpRoughTrans_7: -1034556701
-      H_jumpRoughTrans_8: 1299672189
-      H_jumpRoughTrans_9: 883231558
+      newH_run_0: 1116282014
+      newH_run_1: 303283907
+      newH_run_2: -1929978604
+      newH_run_3: -2055220648
+      newH_run_4: -1287601895
+      newH_run_5: 1048761093
+      newH_run_6: -931202337
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
