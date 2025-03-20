@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
                 decelerate = (Mathf.Abs(rb.velocity.x) < moveSpeed) ? decelerationFactor : dashDecelerationFactor;
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
+                // Changed velocity threshold for changing state to resolve minor audio delays -Will
                 if (rb.velocity.x <= 0.01f && isGrounded)
                 {
                     playerState = state.idle;
@@ -153,7 +154,8 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f && playerState != state.dash)
+        // Added check if Helen is grounded to resolve state bug -Will
+        if (rb.velocity.y < 0f && playerState != state.dash && !isGrounded)
         {
             playerState = state.fall;
             isGrounded = false;
@@ -219,7 +221,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        // Added objects tagged "hazard" as things that can damage Helen -Will
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Hazard"))
         {
             damagedTimer = 1f;
             playerState = state.damaged;
