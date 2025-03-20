@@ -169,7 +169,8 @@ public class Enemy : MonoBehaviour
         //myCollider.enabled = false;
 
         // Changes the tag to prevent Helen from getting hit
-        gameObject.tag = "Object";
+        // Set to "Ground" specifically to allow Helen to jump off of enemy
+        gameObject.tag = "Ground";
 
         // Placeholder death sound effect
         AudioManager.Instance.PlaySoundEffect("audioClip2");
