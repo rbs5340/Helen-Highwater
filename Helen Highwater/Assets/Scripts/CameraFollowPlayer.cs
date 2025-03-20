@@ -6,6 +6,9 @@ public class CameraFollowPlayer : MonoBehaviour
 {
     #region Singleton
     public static CameraFollowPlayer Instance;
+    private bool isShaking; //If screen is shaking
+    private float shakeTime; //How long it will shake for
+    private float shakeStartTime; //When shaking started
 
     // Sets up instance of the Game Manager Singleton
     private void Awake()
@@ -28,7 +31,9 @@ public class CameraFollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isShaking = false;
+        shakeTime = 0.2f;
+        shakeStartTime = -1f;
     }
 
     // Update is called once per frame
@@ -38,11 +43,25 @@ public class CameraFollowPlayer : MonoBehaviour
         pos.x = player.position.x;
         pos.y = player.position.y / 1.5f;
         if (pos.y < 0) pos.y = 0;
+        if (isShaking)
+        {
+            pos += new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f), 0);
+            if(Time.time-shakeStartTime > shakeTime)
+            {
+                isShaking=false;
+            }
+        }
         transform.position = pos;
     }
 
     public void SetPlayer(GameObject newPlayer)
     {
         player = newPlayer.transform;
+    }
+
+    public void Shake()
+    {
+        isShaking=true;
+        shakeStartTime = Time.time;
     }
 }

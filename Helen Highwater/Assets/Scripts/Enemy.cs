@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         // Centers the "enemy"
-        transform.position = Vector3.zero;
+        //transform.position = Vector3.zero;
 
         // Puts the enemy literally anywhere else
         //transform.position = new Vector3(0, 1f, 0);

@@ -229,6 +229,7 @@ public class MechController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            CameraFollowPlayer.Instance.Shake();
             isGrounded = true;
             hoverAvailable = true; //Test hover
             if (Mathf.Abs(rb.velocity.x) > 0)
