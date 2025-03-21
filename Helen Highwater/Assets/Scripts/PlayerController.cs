@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public int playerId = 0;
     private Rewired.Player player;
     private int helenRunID;
+    public Animator animator;
 
     enum state
     {
@@ -93,6 +94,13 @@ public class PlayerController : MonoBehaviour
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
         }
+
+        foreach (state s in Enum.GetValues(typeof(state)))
+        {
+            animator.SetBool(s.ToString(), s == playerState);
+            Debug.Log(s.ToString());
+        }
+        
     }
 
     private void HandleMovement()
