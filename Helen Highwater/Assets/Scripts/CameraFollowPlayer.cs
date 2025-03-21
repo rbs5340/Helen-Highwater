@@ -32,7 +32,7 @@ public class CameraFollowPlayer : MonoBehaviour
     void Start()
     {
         isShaking = false;
-        shakeTime = 0.2f;
+        shakeTime = 0.1f;
         shakeStartTime = -1f;
     }
 
@@ -45,7 +45,7 @@ public class CameraFollowPlayer : MonoBehaviour
         if (pos.y < 0) pos.y = 0;
         if (isShaking)
         {
-            pos += new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f), 0);
+            pos += new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), 0);
             if(Time.time-shakeStartTime > shakeTime)
             {
                 isShaking=false;
