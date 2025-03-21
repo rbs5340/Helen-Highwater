@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public float jumpStrength = 8f;
     public float decelerationFactor = 0.9f;
     public float dashDecelerationFactor = 0.75f;
+    public int maxHealth = 3;
     public int health = 3;
 
     [Header("Attack Settings")]
@@ -153,7 +154,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f && playerState != state.dash)
+        if (rb.velocity.y < 0f && playerState != state.dash && !isGrounded)
         {
             playerState = state.fall;
             isGrounded = false;
@@ -220,18 +221,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Hazard"))
         {
             damagedTimer = 1f;
             playerState = state.damaged;
             AudioManager.Instance.PlaySoundEffect("helenHit");
             health -= 1;
+            Debug.Log(health);
 
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
                 rb.position = spawnLocation;
                 rb.velocity = Vector3.zero;
+                // Resets Helen's HP, since it was reaching negative values
+                health = maxHealth;
             }
 
             knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
@@ -252,6 +256,11 @@ public class PlayerController : MonoBehaviour
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
+        }
+        // Logic for heart pickup
+        if(col.gameObject.layer == 14)
+        {
+            GainHealth(1);
         }
     }
 
@@ -289,4 +298,12 @@ public class PlayerController : MonoBehaviour
         isPausedMidAir = false;
     }
 
+    private void GainHealth(int healthGained)
+    {
+        if (health + healthGained <= maxHealth)
+        {
+            health += healthGained;
+            Debug.Log(health);
+        }
+    }
 }

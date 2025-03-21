@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
         musicSFX = -1;
 
         // Testing junk
-        musicSFX = AddAudio("weezerRiff");
+        //musicSFX = AddAudio("weezerRiff");
         //PlayAudio(musicSFX);
 
         // Don't destroy this object on load
