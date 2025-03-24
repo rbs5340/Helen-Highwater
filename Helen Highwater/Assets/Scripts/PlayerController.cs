@@ -98,8 +98,12 @@ public class PlayerController : MonoBehaviour
         foreach (state s in Enum.GetValues(typeof(state)))
         {
             animator.SetBool(s.ToString(), s == playerState);
-            Debug.Log(s.ToString());
+            //Debug.Log(s.ToString());
         }
+
+        
+        animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
+        Debug.Log(lastDirection);
         
     }
 
@@ -237,6 +241,9 @@ public class PlayerController : MonoBehaviour
             health -= 1;
             Debug.Log(health);
 
+            knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
+            rb.velocity = new Vector2(knockbackAngle, 3f);
+
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
@@ -245,9 +252,6 @@ public class PlayerController : MonoBehaviour
                 // Resets Helen's HP, since it was reaching negative values
                 health = maxHealth;
             }
-
-            knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
-            rb.velocity = new Vector2(knockbackAngle, 3f);
         }
         else if (collision.gameObject.CompareTag("Ground"))
         {
