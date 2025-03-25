@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Settings")]
     public GameObject WrenchPrefab;
     public Transform attackSpawnPoint;
-    private float attackAnimationTimer;
+    private float attackAnimationTimer = 0.5f;
 
     private bool isGrounded;
     private float attackTimer;
@@ -83,9 +83,9 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
             if (playerState != state.damaged)
             {
-                HandleJumping();
-                HandleAttack();
+                HandleJumping();     
                 HandleDash();
+                HandleAttack();
             }
         }
 
@@ -97,13 +97,17 @@ public class PlayerController : MonoBehaviour
 
         foreach (state s in Enum.GetValues(typeof(state)))
         {
-            animator.SetBool(s.ToString(), s == playerState);
+            //animator.SetBool(s.ToString(), s == playerState);
+            if (s == playerState)
+                animator.SetFloat(s.ToString(), 1.0f);
+            else
+                animator.SetFloat(s.ToString(), 0.0f);
             //Debug.Log(s.ToString());
         }
 
-        
-        animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        Debug.Log(lastDirection);
+        if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
+            animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
+        Debug.Log(playerState);
         
     }
 
@@ -127,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
                 lastDirection = Mathf.Sign(direction);
 
-                if (isGrounded)
+                if (isGrounded && playerState != state.wrenchThrow)
                 {
                     playerState = state.run;
                 }
@@ -137,7 +141,7 @@ public class PlayerController : MonoBehaviour
                 decelerate = (Mathf.Abs(rb.velocity.x) < moveSpeed) ? decelerationFactor : dashDecelerationFactor;
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
-                if (rb.velocity.x <= 0.01f && isGrounded)
+                if (rb.velocity.x <= 0.01f && isGrounded && playerState != state.wrenchThrow)
                 {
                     playerState = state.idle;
                 }
@@ -199,7 +203,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (attackTimer > 0)
+        while (attackTimer > 0)
         {
             playerState = state.wrenchThrow;
             attackTimer -= Time.deltaTime;
@@ -253,7 +257,7 @@ public class PlayerController : MonoBehaviour
                 health = maxHealth;
             }
         }
-        else if (collision.gameObject.CompareTag("Ground"))
+        else if (collision.gameObject.CompareTag("Ground") && playerState != state.wrenchThrow)
         {
             isGrounded = true;
             dashAvailable = true;
