@@ -48,6 +48,8 @@ public class MechController : MonoBehaviour
     private int mechRunID;
     private int mechHoverID;
 
+    private float lastDirection = 1f;
+
     private Vector2 spawnLocation;
 
     private void Start()
@@ -87,10 +89,7 @@ public class MechController : MonoBehaviour
 
         //Logs player game state for testing purposes
         //Debug.Log(playerState.ToString());
-
     }
-
-    private float lastDirection = 1f; // 1 for right, -1 for left
 
     private void HandleMovement()
     {
