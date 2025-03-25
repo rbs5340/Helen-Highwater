@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5407941880281416499}
   - component: {fileID: 6175429065130427019}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 5117369341553324894}
   - component: {fileID: 1398366076930667265}
   - component: {fileID: 1742381536582447243}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: player
   m_TagString: Player - Helen
   m_Icon: {fileID: 0}
@@ -192,6 +192,7 @@ MonoBehaviour:
   jumpStrength: 5.5
   decelerationFactor: 0.9
   dashDecelerationFactor: 0.75
+  maxHealth: 3
   health: 3
   WrenchPrefab: {fileID: 3922443426349042702, guid: f3793ff62ddba3842ad7f4b46577f0ce, type: 3}
   attackSpawnPoint: {fileID: 4080713300660254439}
@@ -255,7 +256,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.006, y: -0.12}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -266,7 +267,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.75}
   m_EdgeRadius: 0
 --- !u!95 &1742381536582447243
 Animator:

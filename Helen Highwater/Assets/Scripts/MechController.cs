@@ -7,6 +7,7 @@ public class MechController : MonoBehaviour
 {
     public int playerId = 0; // The Rewired player ID (for a single player game, should always be 0)
     private Rewired.Player player; // The Rewired Player
+    public Animator animator;
 
 
     //Player states for all actions so far. i have a different rising and falling state in case we want to change the gravity to make the platforming feel better,

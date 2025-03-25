@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 if (Mathf.Abs(rb.velocity.x) <= 0.01f && isGrounded && playerState != state.wrenchThrow)
                 {
                     playerState = state.idle;
-                    Debug.Log("TEST1");
+                   // Debug.Log("TEST1");
                 }
             }
         }
@@ -215,7 +215,11 @@ public class PlayerController : MonoBehaviour
         {
             playerState = state.idle;
         }
-        
+        else if (attackTimer <= 0 && !isGrounded && playerState == state.wrenchThrow)
+        {
+            playerState = state.fall;
+        }
+
     }
 
     private void HandleDash()
