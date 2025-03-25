@@ -67,12 +67,19 @@ public class Enemy : MonoBehaviour
         // If enemy collides with hazard (lava) or wrench
         if(collision.gameObject.layer == 9)
         {
-            EnemyDeath();
+            EnemyDeath(false);
         }
 
+        // If it hits the floor is stops moving
         if(!isAlive && collision.gameObject.layer == 7)
         {
             isMoving = false;
+        }
+
+        // If enemy collides with the mech
+        if(collision.gameObject.CompareTag("Player - Mech"))
+        {
+            EnemyDeath(true);
         }
     }
 
@@ -82,7 +89,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.layer == 11 && isAlive)
         {
             AudioManager.Instance.StopAudio(crabWalkID);
-            EnemyDeath();
+            EnemyDeath(false);
         }
     }
 
@@ -146,13 +153,9 @@ public class Enemy : MonoBehaviour
 
         // To Do: track bounds of camera and destroy/deactivate
         // enemy if it leave camera view while dead
-
-        // Camera testing
-        //gameCamera.transform.position = new Vector3(gameCamera.transform.position.x, 
-            //gameCamera.transform.position.y + 0.001f, gameCamera.transform.position.z);
     }
 
-    private void EnemyDeath()
+    private void EnemyDeath(bool hitByMech)
     {
         // Changes the necessary boolean
         isAlive = false;
@@ -165,12 +168,15 @@ public class Enemy : MonoBehaviour
         // Pops the enemy up a bit to prevent weird collision
         transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
 
-        // Disables the collider
-        //myCollider.enabled = false;
-
         // Changes the tag to prevent Helen from getting hit
         // Set to "Ground" specifically to allow Helen to jump off of enemy
         gameObject.tag = "Ground";
+
+        if (hitByMech)
+        {
+            // Disables the collider
+            myCollider.enabled = false;
+        }
 
         // Placeholder death sound effect
         AudioManager.Instance.PlaySoundEffect("audioClip2");

@@ -10,6 +10,14 @@ public class Crate : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player - Mech"))
+        {
+            DestroyThis();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroys the crate when the wrench collides with it
