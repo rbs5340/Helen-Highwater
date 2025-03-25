@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack Settings")]
     public GameObject WrenchPrefab;
     public Transform attackSpawnPoint;
-    private float attackAnimationTimer = 0.5f;
+    private float attackAnimationTimer = 0.4f;
 
     private bool isGrounded;
     private float attackTimer;
@@ -84,8 +84,9 @@ public class PlayerController : MonoBehaviour
             if (playerState != state.damaged)
             {
                 HandleJumping();     
-                HandleDash();
+                
                 HandleAttack();
+                HandleDash();
             }
         }
 
@@ -141,9 +142,10 @@ public class PlayerController : MonoBehaviour
                 decelerate = (Mathf.Abs(rb.velocity.x) < moveSpeed) ? decelerationFactor : dashDecelerationFactor;
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
-                if (rb.velocity.x <= 0.01f && isGrounded && playerState != state.wrenchThrow)
+                if (Mathf.Abs(rb.velocity.x) <= 0.01f && isGrounded && playerState != state.wrenchThrow)
                 {
                     playerState = state.idle;
+                    Debug.Log("TEST1");
                 }
             }
         }
@@ -202,12 +204,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        while (attackTimer > 0)
+       // Debug.Log(attackTimer.ToString());
+        if (attackTimer > 0)
         {
             playerState = state.wrenchThrow;
             attackTimer -= Time.deltaTime;
+            
         }
+        if (attackTimer <= 0 && isGrounded && playerState == state.wrenchThrow)
+        {
+            playerState = state.idle;
+        }
+        
     }
 
     private void HandleDash()
@@ -226,6 +234,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (player.GetButtonDown("Dash") && dashAvailable)
         {
+            attackTimer = 0;
             dashAvailable = false;
             playerState = state.dash;
             dashTimer = 0.5f;
