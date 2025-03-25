@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Official Scenes/HelenHighwater.unity
     guid: 635903265fb8d244fac6599bdb187b66
+  - enabled: 1
+    path: Assets/Scenes/Official Scenes/2HelenHighwater.unity
+    guid: c394cab8104906145b9fb6d614369611
   m_configObjects: {}
