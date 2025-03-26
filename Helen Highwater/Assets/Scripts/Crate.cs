@@ -1,46 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Crate : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private enum CrateType
     {
-        
+        Wooden,
+        Metal
     }
 
+    [SerializeField] private CrateType crateType;
+
+    private const int ProjectileLayer = 11;
+    private const string MechTag = "Player - Mech";
+    private const string MechProjectileTag = "Anchor";
+
+    // Handle collision events
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player - Mech"))
+        if (collision.gameObject.CompareTag(MechTag))
         {
-            DestroyThis();
+            DestroyCrate();
         }
     }
 
+    // Handle trigger events
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Destroys the crate when the wrench collides with it
-        if (collision.gameObject.layer == 11)
+        if (collision.gameObject.layer != ProjectileLayer) return;
+
+        if (DestructibleByProjectile(collision))
         {
-            DestroyThis();
+            DestroyCrate();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Determines if this crate can be destroyed by a projectile
+    private bool DestructibleByProjectile(Collider2D collision)
     {
-        
+        return crateType == CrateType.Wooden || // Wooden crates always destructible
+               (crateType == CrateType.Metal && collision.gameObject.CompareTag(MechProjectileTag)); // Metal crates only destructible by mech projectiles
     }
 
     // Method to destroy this crate when necessary
-    private void DestroyThis()
+    private void DestroyCrate()
     {
         // Play the crate destroying sound effect
         AudioManager.Instance.PlaySoundEffect("crateDestroy");
-
-        Destroy(this.gameObject);
-
-        // Could alternatively use setActive instead of destroy
+        Destroy(gameObject);
     }
 }
