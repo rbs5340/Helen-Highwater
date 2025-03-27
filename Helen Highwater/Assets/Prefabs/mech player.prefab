@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 0
-  animator: {fileID: 0}
+  animator: {fileID: 5214948314632163513}
   moveSpeed: 2.5
   jumpStrength: 6
   decelerationFactor: 0.9

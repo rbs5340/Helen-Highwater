@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        Debug.Log(playerState);
+        //Debug.Log(playerState);
         
     }
 
@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour
                 health = maxHealth;
             }
         }
-        else if (collision.gameObject.CompareTag("Ground") && playerState != state.wrenchThrow)
+        else if (collision.gameObject.CompareTag("Ground") && playerState != state.wrenchThrow && rb.velocity.y == 0)
         {
             isGrounded = true;
             dashAvailable = true;
@@ -325,6 +325,19 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 1;
         rb.velocity = storedVelocity;
         isPausedMidAir = false;
+        attackTimer = 0;
+        
+        if(rb.velocity.y > 0)
+        {
+            playerState = state.rise;
+     
+        }
+        else
+        {
+            playerState = state.fall;
+            
+        }
+        Debug.Log(playerState);
     }
 
     private void GainHealth(int healthGained)

@@ -88,8 +88,10 @@ public class MechController : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
 
+        if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
+            animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
-        //Debug.Log(playerState.ToString());
+        Debug.Log(playerState.ToString());
     }
 
     private void HandleMovement()
@@ -142,9 +144,10 @@ public class MechController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f && playerState != state.hover) //Hover test
+        if (rb.velocity.y < 0f && playerState != state.hover && !isGrounded)
         {
             playerState = state.fall;
+            isGrounded = false;
         }
     }
 
@@ -227,7 +230,7 @@ public class MechController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && rb.velocity.y == 0)
         {
             CameraFollowPlayer.Instance.Shake();
             isGrounded = true;
