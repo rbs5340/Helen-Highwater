@@ -19,11 +19,13 @@ public class PlayerSwitch : MonoBehaviour
             if(currentIndex == 0)
             {
                 AudioManager.Instance.PlaySoundEffect("helenToMech");
+                HealthDisplay.Instance.healthChange(4);
             }
             // Mech to Helen SFX
             else if(currentIndex == 1)
             {
                 AudioManager.Instance.PlaySoundEffect("mechToHelen");
+                HealthDisplay.Instance.healthChange(3);
             }
             Vector3 position = currentPlayer.transform.position; // Save player position
             Destroy(currentPlayer); // Remove old player

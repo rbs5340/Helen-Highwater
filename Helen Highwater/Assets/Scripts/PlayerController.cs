@@ -94,6 +94,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
+            health = maxHealth;
+            HealthDisplay.Instance.healthChange(health);
         }
 
         foreach (state s in Enum.GetValues(typeof(state)))
@@ -256,6 +258,7 @@ public class PlayerController : MonoBehaviour
             playerState = state.damaged;
             AudioManager.Instance.PlaySoundEffect("helenHit");
             health -= 1;
+            HealthDisplay.Instance.healthChange(health);
             Debug.Log(health);
 
             knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -1f : 1f;
@@ -268,6 +271,7 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 // Resets Helen's HP, since it was reaching negative values
                 health = maxHealth;
+                HealthDisplay.Instance.healthChange(health);
             }
         }
         else if (collision.gameObject.CompareTag("Ground") && playerState != state.wrenchThrow && rb.velocity.y == 0)
@@ -345,6 +349,7 @@ public class PlayerController : MonoBehaviour
         if (health + healthGained <= maxHealth)
         {
             health += healthGained;
+            HealthDisplay.Instance.healthChange(health);
             Debug.Log(health);
         }
     }
