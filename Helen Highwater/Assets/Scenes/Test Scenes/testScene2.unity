@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 1913318157}
   - component: {fileID: 1913318156}
   - component: {fileID: 1913318155}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: block (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 2053095125}
   - component: {fileID: 2053095124}
   - component: {fileID: 2053095126}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: block
   m_TagString: Ground
   m_Icon: {fileID: 0}
