@@ -9,12 +9,15 @@ public class WrenchBehaviour : MonoBehaviour
     public float maxDistance = 5f;   // distance before returning
     public float pauseTime = 0.5f;   // time at peak before returning
 
+    public LayerMask groundLayer;    // LayerMask for detecting ground
+
     public Action OnDestroyCallback;
 
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private Transform player;
     private float direction = 1f; // default: right
+    private bool hitGround = false;
 
     public void Initialize(float dir, Transform playerTransform)
     {
@@ -28,13 +31,13 @@ public class WrenchBehaviour : MonoBehaviour
 
     private IEnumerator BoomerangRoutine()
     {
-        // move toward target position
+        // Move toward target position, stop early if hitting ground
         yield return MoveToTarget(targetPosition);
 
-        // pause at peak
+        // Pause at peak or after hitting ground
         yield return new WaitForSeconds(pauseTime);
 
-        // return to player
+        // Return to player
         yield return MoveToTarget(player.position, true);
 
         Destroy(gameObject);
@@ -49,10 +52,20 @@ public class WrenchBehaviour : MonoBehaviour
                 target = player.position;
             }
 
+            // Move forward
             transform.position = Vector3.MoveTowards(transform.position, target, flightSpeed * Time.deltaTime);
+
+            // Check if we hit the ground
+            if (!trackPlayer && Physics2D.OverlapCircle(transform.position, 0.1f, groundLayer))
+            {
+                hitGround = true;
+                break; // Stop moving forward, enter pause state
+            }
+
             yield return null;
         }
     }
+
     private void OnDestroy()
     {
         OnDestroyCallback?.Invoke(); // Notify PlayerController

@@ -101,7 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flightSpeed: 10
   maxDistance: 3
-  pauseTime: 1
+  pauseTime: 0.75
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &4542060978680588264
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -248,6 +251,9 @@ MonoBehaviour:
   flightSpeed: 10
   maxDistance: 3
   pauseTime: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &8510332220240406471
 BoxCollider2D:
   m_ObjectHideFlags: 0
