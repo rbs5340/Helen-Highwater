@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        //Debug.Log(playerState);
+        Debug.Log(rb.velocity.y);
         
     }
 
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f && playerState != state.dash && !isGrounded)
+        if (rb.velocity.y < 0f && playerState != state.dash)
         {
             playerState = state.fall;
             isGrounded = false;
@@ -233,9 +233,15 @@ public class PlayerController : MonoBehaviour
                 dashTimer -= Time.deltaTime;
                 rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y);
             }
-            else
+            else if (rb.velocity.y < 0)
             {
                 playerState = state.fall;
+            }
+            else
+            {
+                playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
+                isGrounded = true;
+                dashAvailable = true;
             }
         }
         else if (player.GetButtonDown("Dash") && dashAvailable)
