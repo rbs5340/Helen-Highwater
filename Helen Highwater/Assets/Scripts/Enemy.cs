@@ -178,7 +178,7 @@ public class Enemy : MonoBehaviour
             myCollider.enabled = false;
         }
 
-        // Placeholder death sound effect
-        AudioManager.Instance.PlaySoundEffect("audioClip2");
+        // Death sound effect
+        AudioManager.Instance.PlaySoundEffect("crabDeath");
     }
 }

@@ -289,6 +289,7 @@ public class PlayerController : MonoBehaviour
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
+            AudioManager.Instance.PlaySoundEffect("helenParry");
         }
         // Logic for heart pickup
         if(col.gameObject.layer == 14)

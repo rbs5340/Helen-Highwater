@@ -230,9 +230,13 @@ public class MechController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // This code doesn't always occur when the mech touches the ground, I think it might be
+        // because the y-velocity needs to be 0. Could consider having a low threshold instead
+        // of requiring it to be exactly 0 - Will
         if (collision.gameObject.CompareTag("Ground") && rb.velocity.y == 0)
         {
             CameraFollowPlayer.Instance.Shake();
+            AudioManager.Instance.PlaySoundEffect("mechLand");
             isGrounded = true;
             hoverAvailable = true; //Test hover
             if (Mathf.Abs(rb.velocity.x) > 0)

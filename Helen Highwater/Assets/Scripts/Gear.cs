@@ -23,6 +23,7 @@ public class Gear : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             GlobalVar.Instance.gearsCollected++;
+            AudioManager.Instance.PlaySoundEffect("gearPickup");
             Debug.Log(GlobalVar.Instance.gearsCollected + "/" + GlobalVar.Instance.totalGears + " Gears Collected");
         }
     }

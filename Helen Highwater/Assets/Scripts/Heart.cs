@@ -22,6 +22,7 @@ public class Heart : MonoBehaviour
         // Logic for colliding with Helen
         if (collision.gameObject.CompareTag("Player - Helen") || collision.gameObject.CompareTag("Player - Mech"))
         {
+            AudioManager.Instance.PlaySoundEffect("heartPickup");
             this.gameObject.SetActive(false);
         }
     }
