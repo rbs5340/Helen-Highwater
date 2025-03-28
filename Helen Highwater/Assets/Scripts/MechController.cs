@@ -91,7 +91,7 @@ public class MechController : MonoBehaviour
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
-        Debug.Log(playerState.ToString());
+        Debug.Log(rb.velocity.y);
     }
 
     private void HandleMovement()
@@ -233,7 +233,7 @@ public class MechController : MonoBehaviour
         // This code doesn't always occur when the mech touches the ground, I think it might be
         // because the y-velocity needs to be 0. Could consider having a low threshold instead
         // of requiring it to be exactly 0 - Will
-        if (collision.gameObject.CompareTag("Ground") && rb.velocity.y == 0)
+        if (collision.gameObject.CompareTag("Ground"))
         {
             CameraFollowPlayer.Instance.Shake();
             AudioManager.Instance.PlaySoundEffect("mechLand");
