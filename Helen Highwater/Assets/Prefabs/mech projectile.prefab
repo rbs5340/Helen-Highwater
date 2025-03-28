@@ -101,6 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flightSpeed: 10
   lifetime: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &4542060978680588264
 BoxCollider2D:
   m_ObjectHideFlags: 0
