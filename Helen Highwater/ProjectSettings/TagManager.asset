@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Object
   - Hazard
+  - Anchor
   layers:
   - Default
   - TransparentFX
