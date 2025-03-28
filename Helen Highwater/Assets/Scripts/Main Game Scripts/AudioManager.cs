@@ -70,7 +70,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Empty for now
+        //Empty
     }
 
     // PlaySoundEffect: For playing sound effects that only play once
@@ -116,6 +116,8 @@ public class AudioManager : MonoBehaviour
         // Returns the name of the sound file and its index
         // Store this index in order to call to Play/Pause/Stop
         Debug.Log("Audio Index " + (audioClips.Count - 1) + ": " + audioName);
+
+        //GetAllTracks();
         return audioClips.Count - 1;
     }
 
@@ -166,6 +168,28 @@ public class AudioManager : MonoBehaviour
 
         Debug.Log("Now Stopping: " + audioClips[audioID].name);
         audioSources[audioID].Stop();
+    }
+    
+    // GetAllTracks: Returns the names of all saved audio files meant
+    // for being looped (Currently used for testing)
+    public void GetAllTracks()
+    {
+        string trackList = "";
+
+        for(int i = 0; i < audioClips.Count; i++)
+        {
+            trackList += audioClips[i].name;
+
+            if(i != audioClips.Count - 1)
+            {
+                trackList += ", ";
+            }
+        }
+
+        if(trackList != "")
+        {
+            Debug.Log(trackList);
+        }
     }
 
     #region Volume Control

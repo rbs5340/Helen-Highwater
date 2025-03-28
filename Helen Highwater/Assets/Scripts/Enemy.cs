@@ -15,6 +15,11 @@ public class Enemy : MonoBehaviour
     private bool firstMove; // Used to invoke code when this enemy first moves
     private bool isMoving; // Is the crab still moving?
 
+    private Camera mainCamera;
+    private bool onScreen; // Is the crab on screen?
+    private bool enteredScreen; // Did the crab just enter the screen?
+    private Vector3 screenPoint;
+
     // Integers to store looping SFX indexes
     private int crabWalkID;
 
@@ -46,6 +51,10 @@ public class Enemy : MonoBehaviour
         isAlive = true;
         firstMove = false;
         isMoving = true;
+        onScreen = false;
+        enteredScreen = false;
+
+        mainCamera = Camera.main;
 
         // Loads crabWalk SFX
         crabWalkID = AudioManager.Instance.AddAudio("crabWalk2");
@@ -140,6 +149,22 @@ public class Enemy : MonoBehaviour
                 AudioManager.Instance.PlayAudio(crabWalkID);
                 firstMove = true;
             }
+
+            enteredScreen = onScreen;
+            screenPoint = mainCamera.WorldToViewportPoint(this.transform.position);
+            // Determines whether or not enemy is on screen
+            onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+            // If enemy is not on screen, walk SFX is paused
+            if (!onScreen)
+            {
+                AudioManager.Instance.PauseAudio(crabWalkID);
+            }
+            // Resumes audio on the frame the enemy enters the screen
+            else if (!enteredScreen && onScreen)
+            {
+                AudioManager.Instance.PlayAudio(crabWalkID);
+            }
+            //Debug.Log(onScreen);
         }
         else if(isMoving)
         {
@@ -172,11 +197,18 @@ public class Enemy : MonoBehaviour
         // Set to "Ground" specifically to allow Helen to jump off of enemy
         gameObject.tag = "Ground";
 
-        if (hitByMech)
+        // Normally, the enemy crab will only die if hit by the mech
+        /*if (hitByMech)
         {
             // Disables the collider
             myCollider.enabled = false;
-        }
+        }*/
+        // However, due to a bug, it dies to any attack by Helen (for now)
+        myCollider.enabled = false;
+
+        // Sets the collision layer to "enemy" to prevent from
+        // colliding with edge objects
+        gameObject.layer = 6;
 
         // Death sound effect
         AudioManager.Instance.PlaySoundEffect("crabDeath");

@@ -64,4 +64,9 @@ public class CameraFollowPlayer : MonoBehaviour
         isShaking=true;
         shakeStartTime = Time.time;
     }
+
+    public Vector3 GetCameraPos()
+    {
+        return transform.position;
+    }
 }
