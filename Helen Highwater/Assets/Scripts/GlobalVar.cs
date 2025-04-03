@@ -38,7 +38,7 @@ public class GlobalVar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Current Time Taken:" + (Time.time-startTime));
+        //Debug.Log("Current Time Taken:" + (Time.time-startTime));
     }
 
 }

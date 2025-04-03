@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviour
         int minsTaken = (int)(timeTaken / 60f);
         float secsTaken = timeTaken % 60;
         int gears = GlobalVar.Instance.gearsCollected;
-        timeTakenText.text = "Clear Time: "+minsTaken.ToString("00")+"m:"+secsTaken.ToString("#.00")+"s";
+        timeTakenText.text = "Clear Time: "+minsTaken.ToString("00")+"m:"+secsTaken.ToString("00.00")+"s";
         //Debug.Log("Gears:" + gears);
         if (gears > 0)
         {
