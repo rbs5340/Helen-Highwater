@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public GameObject controlChangeMenu;
+    public GameObject endScreen;
 
     //Text sliders
     public TextMeshProUGUI masterText;
@@ -23,6 +24,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+
+    // End Screen Objects
+    public TextMeshProUGUI timeTakenText;
+    public Sprite gearCollected;
+    public GameObject gear1;
+    public GameObject gear2;
+    public GameObject gear3;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +83,31 @@ public class PauseMenu : MonoBehaviour
     {
         AudioManager.Instance.PlaySoundEffect("buttonPress");
         controlChangeMenu.SetActive(true);
+    }
+
+    public void EndScreen()
+    {
+        if (pauseMenu.activeSelf)
+        {
+            pauseMenu.SetActive(false);
+        }
+        endScreen.SetActive(true);
+        float timeTaken = Time.time - GlobalVar.Instance.startTime;
+        int gears = GlobalVar.Instance.gearsCollected;
+        timeTakenText.text = "Time Taken: "+timeTaken.ToString("#.00")+" Seconds";
+        Debug.Log("Gears:" + gears);
+        if (gears > 0)
+        {
+            gear1.gameObject.GetComponent<UnityEngine.UI.Image>().sprite = gearCollected;
+        }
+        if (gears > 1)
+        {
+            gear2.gameObject.GetComponent<UnityEngine.UI.Image>().sprite = gearCollected;
+        }
+        if (gears > 2)
+        {
+            gear3.gameObject.GetComponent<UnityEngine.UI.Image>().sprite = gearCollected;
+        }
     }
 
     public void Resume()
