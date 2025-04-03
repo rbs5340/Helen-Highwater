@@ -96,6 +96,10 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
             health = maxHealth;
             HealthDisplay.Instance.healthChange(health);
+            if (activeWrench != null)
+            {
+                Destroy(activeWrench);
+            }
         }
 
         foreach (state s in Enum.GetValues(typeof(state)))
@@ -273,12 +277,20 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
+
+                if (activeWrench != null)
+                {
+                    Destroy(activeWrench);
+                }
+
                 rb.position = spawnLocation;
                 rb.velocity = Vector3.zero;
+
                 // Resets Helen's HP, since it was reaching negative values
                 health = maxHealth;
                 HealthDisplay.Instance.healthChange(health);
             }
+
         }
         else if (collision.gameObject.CompareTag("Ground") && playerState != state.wrenchThrow && rb.velocity.y == 0)
         {

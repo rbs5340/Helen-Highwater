@@ -38,6 +38,12 @@ public class WrenchBehaviour : MonoBehaviour
         yield return new WaitForSeconds(pauseTime);
 
         // Return to player
+        if (player == null) // Check if the player has been destroyed
+        {
+            Destroy(gameObject);
+            yield break;
+        }
+
         yield return MoveToTarget(player.position, true);
 
         Destroy(gameObject);
@@ -47,6 +53,12 @@ public class WrenchBehaviour : MonoBehaviour
     {
         while (Vector3.Distance(transform.position, target) > 0.1f)
         {
+            if (player == null) // If player is destroyed, destroy the projectile
+            {
+                Destroy(gameObject);
+                yield break;
+            }
+
             if (trackPlayer)
             {
                 target = player.position;
@@ -64,9 +76,9 @@ public class WrenchBehaviour : MonoBehaviour
 
             yield return null;
         }
-    }
+}
 
-    private void OnDestroy()
+private void OnDestroy()
     {
         OnDestroyCallback?.Invoke(); // Notify PlayerController
     }
