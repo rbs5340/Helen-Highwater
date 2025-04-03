@@ -93,9 +93,12 @@ public class PauseMenu : MonoBehaviour
         }
         endScreen.SetActive(true);
         float timeTaken = Time.time - GlobalVar.Instance.startTime;
+        //Debug.Log("Time Taken Test:"+timeTaken);
+        int minsTaken = (int)(timeTaken / 60f);
+        float secsTaken = timeTaken % 60;
         int gears = GlobalVar.Instance.gearsCollected;
-        timeTakenText.text = "Time Taken: "+timeTaken.ToString("#.00")+" Seconds";
-        Debug.Log("Gears:" + gears);
+        timeTakenText.text = "Clear Time: "+minsTaken.ToString("00")+"m:"+secsTaken.ToString("00.00")+"s";
+        //Debug.Log("Gears:" + gears);
         if (gears > 0)
         {
             gear1.gameObject.GetComponent<UnityEngine.UI.Image>().sprite = gearCollected;

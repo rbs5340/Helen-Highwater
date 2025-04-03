@@ -13590,7 +13590,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time Taken: 5.595 Seconds'
+  m_text: 'Clear Time: XXm:XX.XXs'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fd27c8d67bc80c45b729a4a13ca369c, type: 2}
   m_sharedMaterial: {fileID: 4105726545653126596, guid: 5fd27c8d67bc80c45b729a4a13ca369c, type: 2}
