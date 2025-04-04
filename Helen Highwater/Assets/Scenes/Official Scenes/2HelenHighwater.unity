@@ -1938,9 +1938,7 @@ Transform:
   - {fileID: 2052849101}
   - {fileID: 1212074745}
   - {fileID: 1825153674}
-  - {fileID: 937626612}
   - {fileID: 774021762}
-  - {fileID: 797351330}
   - {fileID: 785859826}
   - {fileID: 733297986}
   - {fileID: 1988016373}
@@ -2054,6 +2052,8 @@ Transform:
   - {fileID: 471008785}
   - {fileID: 2056668830}
   - {fileID: 1054484131}
+  - {fileID: 937626612}
+  - {fileID: 797351330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &283764087
@@ -2748,7 +2748,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 58e8b54a67d7d9044af1037fa5a199ed, type: 3}
+  m_Texture: {fileID: 2800000, guid: 218e8932ce7059848bff6aa6e8771df8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -5140,9 +5140,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 280881572}
     m_Modifications:
+    - target: {fileID: 1993868704597879320, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5622711
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993868704597879320, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_Size.y
+      value: 1.4723454
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993868704597879320, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.024986267
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993868704597879320, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.1199255
+      objectReference: {fileID: 0}
     - target: {fileID: 2181504245679789972, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
       propertyPath: m_Name
       value: Crab Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534699078230717893, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534699078230717893, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7534699078230717893, guid: 19204c0dc4b685547812f4b525859db3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9826,7 +9850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1573470339
 Transform:
   m_ObjectHideFlags: 0
@@ -12443,8 +12467,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13599,8 +13623,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
