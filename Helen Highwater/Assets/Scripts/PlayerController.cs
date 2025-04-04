@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
                 decelerate = (Mathf.Abs(rb.velocity.x) < moveSpeed) ? decelerationFactor : dashDecelerationFactor;
                 rb.velocity = new Vector2(rb.velocity.x * decelerate, rb.velocity.y);
 
-                if (Mathf.Abs(rb.velocity.x) <= 0.01f && isGrounded && playerState != state.wrenchThrow)
+                if (Mathf.Abs(rb.velocity.x) <= 0.25f && isGrounded && playerState != state.wrenchThrow)
                 {
                     playerState = state.idle;
                    // Debug.Log("TEST1");

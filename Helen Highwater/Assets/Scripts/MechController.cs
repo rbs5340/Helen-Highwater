@@ -91,7 +91,7 @@ public class MechController : MonoBehaviour
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(playerState);
     }
 
     private void HandleMovement()
@@ -144,8 +144,9 @@ public class MechController : MonoBehaviour
             isGrounded = false;
             playerState = state.rise;
         }
-        if (rb.velocity.y < 0f && playerState != state.hover && !isGrounded)
+        if (rb.velocity.y < -0.1f && playerState != state.hover)
         {
+            Debug.Log("FALL");
             playerState = state.fall;
             isGrounded = false;
         }
@@ -234,19 +235,15 @@ public class MechController : MonoBehaviour
         // because the y-velocity needs to be 0. Could consider having a low threshold instead
         // of requiring it to be exactly 0 - Will
         if (collision.gameObject.CompareTag("Ground"))
+            
         {
+            Debug.Log("LANDED");
             CameraFollowPlayer.Instance.Shake();
             AudioManager.Instance.PlaySoundEffect("mechLand");
             isGrounded = true;
             hoverAvailable = true; //Test hover
-            if (Mathf.Abs(rb.velocity.x) > 0)
-            {
-                playerState = state.run;
-            }
-            else
-            {
-                playerState = state.idle;
-            }
+
+            playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
         }
     }
 
