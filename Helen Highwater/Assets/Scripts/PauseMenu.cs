@@ -87,6 +87,7 @@ public class PauseMenu : MonoBehaviour
 
     public void EndScreen()
     {
+        Time.timeScale = 0f;
         if (pauseMenu.activeSelf)
         {
             pauseMenu.SetActive(false);
