@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Rewired;
 using UnityEngine.UIElements;
+using System;
 
 public class MechController : MonoBehaviour
 {
@@ -86,6 +87,17 @@ public class MechController : MonoBehaviour
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
+        }
+
+        //Sends Animation states to animator
+        foreach (state s in Enum.GetValues(typeof(state)))
+        {
+            //animator.SetBool(s.ToString(), s == playerState);
+            if (s == playerState)
+                animator.SetFloat(s.ToString(), 1.0f);
+            else
+                animator.SetFloat(s.ToString(), 0.0f);
+            //Debug.Log(s.ToString());
         }
 
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
