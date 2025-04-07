@@ -87,6 +87,7 @@ public class MechController : MonoBehaviour
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
+            AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
 
         //Sends Animation states to animator

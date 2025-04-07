@@ -45,7 +45,14 @@ public class Crate : MonoBehaviour
     private void DestroyCrate()
     {
         // Play the crate destroying sound effect
-        AudioManager.Instance.PlaySoundEffect("crateDestroy");
+        if (crateType == CrateType.Wooden)
+        {
+            AudioManager.Instance.PlaySoundEffect("crateDestroy");
+        }
+        else if(crateType == CrateType.Metal)
+        {
+            AudioManager.Instance.PlaySoundEffect("metalDestroy");
+        }
         Destroy(gameObject);
     }
 }

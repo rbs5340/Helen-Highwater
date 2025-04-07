@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         if (rb.position.y < -7)
         {
             rb.position = spawnLocation;
+            AudioManager.Instance.PlaySoundEffect("helenDeath");
             rb.velocity = Vector3.zero;
             health = maxHealth;
             HealthDisplay.Instance.healthChange(health);
@@ -256,6 +257,7 @@ public class PlayerController : MonoBehaviour
             dashTimer = 0.5f;
             isGrounded = false;
             rb.velocity = new Vector2(dashSpeed.x * lastDirection, dashSpeed.y);
+            AudioManager.Instance.PlaySoundEffect("helenDash");
         }
     }
 
@@ -277,6 +279,7 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("YOU DIED");
+                AudioManager.Instance.PlaySoundEffect("helenDeath");
 
                 if (activeWrench != null)
                 {
