@@ -54,6 +54,8 @@ public class MechController : MonoBehaviour
 
     private Vector2 spawnLocation;
 
+    public float mechTimer;
+
     private void Start()
     {
         // Get Rewired Player
@@ -73,6 +75,8 @@ public class MechController : MonoBehaviour
 
         mechRunID = AudioManager.Instance.AddAudio("mechRun");
         mechHoverID = AudioManager.Instance.AddAudio("mechHover");
+
+        mechTimer = 90f;
     }
 
     private void Update()
@@ -82,11 +86,14 @@ public class MechController : MonoBehaviour
         HandleAttack();
         HandleHover(); //HOVER TEST
 
+        mechTimer -= Time.deltaTime;
+
         //Handles respawning
-        if (rb.position.y < -7)
+        if (rb.position.y < -7 || mechTimer < 0f)
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
+            mechTimer = 90f;
             AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
 
@@ -104,7 +111,8 @@ public class MechController : MonoBehaviour
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
-        //Debug.Log(playerState);
+        Debug.Log(mechTimer);
+        
     }
 
     private void HandleMovement()
@@ -127,7 +135,7 @@ public class MechController : MonoBehaviour
             // Apply deceleration
             rb.velocity = new Vector2(rb.velocity.x * decelerationFactor, rb.velocity.y);
 
-            if (rb.velocity.x == 0f && isGrounded)
+            if (rb.velocity.x <= 0.25f && isGrounded)
             {
                 playerState = state.idle;
             }
