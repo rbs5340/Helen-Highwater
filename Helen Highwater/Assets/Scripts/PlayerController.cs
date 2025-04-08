@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         if (player.GetButtonDown("Jump") && isGrounded)
         {
-            AudioManager.Instance.PlaySoundEffect("helenJump");
+            AudioManager.Instance.PlaySoundEffect("helenJump2");
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
             playerState = state.rise;
