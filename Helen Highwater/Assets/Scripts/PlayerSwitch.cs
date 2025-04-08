@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerSwitch : MonoBehaviour
 {
     public GameObject[] playerPrefabs; // Assign different player prefabs in Inspector
+    public GameObject[] tutorialBoards;
     private GameObject currentPlayer;
     private int currentIndex = 0;
 
@@ -15,6 +16,7 @@ public class PlayerSwitch : MonoBehaviour
     {
         if (currentPlayer != null)
         {
+            SwitchBoards();
             // Helen to Mech SFX
             if(currentIndex == 0)
             {
@@ -39,5 +41,13 @@ public class PlayerSwitch : MonoBehaviour
         Vector3 spawnPosition = position ?? Vector3.zero; // Default to (0,0,0) if no position is given
         currentPlayer = Instantiate(playerPrefabs[index], spawnPosition, Quaternion.identity);
         CameraFollowPlayer.Instance.SetPlayer(currentPlayer);
+    }
+
+    private void SwitchBoards()
+    {
+        for (int i = 0; i < tutorialBoards.Length; i++)
+        {
+            tutorialBoards[i].SetActive(!tutorialBoards[i].activeSelf);
+        }
     }
 }

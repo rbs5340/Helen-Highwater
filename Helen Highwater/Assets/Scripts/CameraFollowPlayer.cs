@@ -27,6 +27,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
 
     public Transform player;
+    public Transform background;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +53,10 @@ public class CameraFollowPlayer : MonoBehaviour
             }
         }
         transform.position = pos;
+        pos.x = (player.position.x*.965f) + 2f;
+        pos.z = 10f;
+        background.position = pos;
+        
     }
 
     public void SetPlayer(GameObject newPlayer)
