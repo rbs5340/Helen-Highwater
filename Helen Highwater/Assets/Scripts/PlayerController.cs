@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
         if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.y);
         
     }
 
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         if (player.GetButtonDown("Jump") && isGrounded)
         {
-            AudioManager.Instance.PlaySoundEffect("helenJump");
+            AudioManager.Instance.PlaySoundEffect("helenJump2");
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
             playerState = state.rise;
@@ -251,6 +251,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (player.GetButtonDown("Dash") && dashAvailable)
         {
+            //if(activeWrench && (WrenchPrefab.transform.position.x <= rb.position.x ) DO THE COLLISION DETECTION HERE MANUALLY!! DO THE THING WHERE YOU CHECK IF ITS NOT COLLIDING IN ALL 4 DIRECTIONS
             attackTimer = 0;
             dashAvailable = false;
             playerState = state.dash;
@@ -305,6 +306,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        
         if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
         {
             playerState = state.rise;
@@ -312,10 +314,23 @@ public class PlayerController : MonoBehaviour
             dashAvailable = true;
             AudioManager.Instance.PlaySoundEffect("helenParry");
         }
+        
         // Logic for heart pickup
         if(col.gameObject.layer == 14)
         {
             GainHealth(1);
+        }
+    }
+
+    void OnCollisionStay(Collision col )
+    {
+        Debug.Log(col);
+        if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
+        {
+            playerState = state.rise;
+            rb.velocity = new Vector2(rb.velocity.x, 5f);
+            dashAvailable = true;
+            AudioManager.Instance.PlaySoundEffect("helenParry");
         }
     }
 
