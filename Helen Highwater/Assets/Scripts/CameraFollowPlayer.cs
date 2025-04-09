@@ -53,7 +53,7 @@ public class CameraFollowPlayer : MonoBehaviour
             }
         }
         transform.position = pos;
-        pos.x = (player.position.x*.965f) + 2f;
+        pos.x = (player.position.x*.975f) + 2f;
         pos.z = 10f;
         background.position = pos;
         
