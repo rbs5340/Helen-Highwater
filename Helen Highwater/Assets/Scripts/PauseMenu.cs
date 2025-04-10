@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
         pauseButton.SetActive(false);
         pauseMenu.SetActive(true);
         AudioManager.Instance.PlaySoundEffect("buttonPress");
+        AudioManager.Instance.StopAllSounds();
     }
 
     public void OpenOptions()

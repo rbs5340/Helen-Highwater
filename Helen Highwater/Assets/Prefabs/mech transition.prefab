@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 822029655319466031}
   m_Layer: 0
   m_Name: mech transition
-  m_TagString: Untagged
+  m_TagString: Switch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

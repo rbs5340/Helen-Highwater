@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
             dashTimer = 0.5f;
             isGrounded = false;
             rb.velocity = new Vector2(dashSpeed.x * lastDirection, dashSpeed.y);
-            AudioManager.Instance.PlaySoundEffect("helenDash");
+            AudioManager.Instance.PlaySoundEffect("helenDash2");
         }
     }
 
@@ -313,6 +313,15 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
             AudioManager.Instance.PlaySoundEffect("helenParry");
+        }
+
+        // Stops run sound from looping after turning into the mech
+        if (col.CompareTag("Switch"))
+        {
+            if (AudioManager.Instance.isPlaying(helenRunID))
+            {
+                AudioManager.Instance.StopAudio(helenRunID);
+            }
         }
         
         // Logic for heart pickup

@@ -130,7 +130,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Now Playing: " + audioClips[audioID].name);
+        //Debug.Log("Now Playing: " + audioClips[audioID].name);
         // Adjusts the volume and plays the sound effect
         audioSources[audioID].volume = masterVolume * sfxVolume;
         audioSources[audioID].Play();
@@ -152,7 +152,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Now Pausing: " + audioClips[audioID].name);
+        //Debug.Log("Now Pausing: " + audioClips[audioID].name);
         audioSources[audioID].Pause();
     }
 
@@ -166,7 +166,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Now Stopping: " + audioClips[audioID].name);
+        //Debug.Log("Now Stopping: " + audioClips[audioID].name);
         audioSources[audioID].Stop();
     }
     
@@ -192,8 +192,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    #region Volume Control
-    public void SetMaster(float value)
+    // Stops all looping sound effects
+    public void StopAllSounds()
+    {
+        for (int i = 0; i < audioClips.Count; i++)
+        {
+            if (audioSources[i].isPlaying)
+            {
+                audioSources[i].Stop();
+            }
+        }
+
+        Debug.Log("Stopping all sounds");
+    }
+
+        #region Volume Control
+        public void SetMaster(float value)
     {
         masterVolume = value;
     }

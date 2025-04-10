@@ -111,7 +111,7 @@ public class MechController : MonoBehaviour
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
-        Debug.Log(mechTimer);
+        //Debug.Log(mechTimer);
         
     }
 
