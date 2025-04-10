@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float attackTimer;
     private bool dashAvailable;
+    private bool parryAvailable;
 
     private float direction;
     private state playerState;
@@ -247,11 +248,12 @@ public class PlayerController : MonoBehaviour
                 playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
                 isGrounded = true;
                 dashAvailable = true;
+                parryAvailable = true;
             }
         }
         else if (player.GetButtonDown("Dash") && dashAvailable)
         {
-            //if(activeWrench && (WrenchPrefab.transform.position.x <= rb.position.x ) DO THE COLLISION DETECTION HERE MANUALLY!! DO THE THING WHERE YOU CHECK IF ITS NOT COLLIDING IN ALL 4 DIRECTIONS
+            //AABB on lightbulb if needed in the future to make the on trigger exit look less janky
             attackTimer = 0;
             dashAvailable = false;
             playerState = state.dash;
@@ -300,15 +302,17 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
             dashAvailable = true;
+            parryAvailable = true;
             playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         
-        if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
+        if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45 && parryAvailable)
         {
+            parryAvailable = false;
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
@@ -331,11 +335,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision col )
+    //This lets helen parry if she starts the dash inside of the lightbulb or wrench. Looks very janky on the lightbulb but good on the wrench.
+    void OnTriggerExit2D(Collider2D col)
     {
         Debug.Log(col);
-        if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45)
+        if (col.gameObject.layer == 11 && playerState == state.dash && parryAvailable)
         {
+            parryAvailable = false;
             playerState = state.rise;
             rb.velocity = new Vector2(rb.velocity.x, 5f);
             dashAvailable = true;
