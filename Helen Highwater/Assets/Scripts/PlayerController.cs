@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
             HealthDisplay.Instance.healthChange(health);
             Debug.Log(health);
 
-            knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -2f : 1f;
+            knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -2f : 2f;
             rb.velocity = new Vector2(knockbackAngle, 3f);
 
             if (health <= 0)
