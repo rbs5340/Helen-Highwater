@@ -44,6 +44,7 @@ public class MechProjectileBehaviour : MonoBehaviour
         // If it hits the ground, destroy the projectile
         if (((1 << collision.gameObject.layer) & groundLayer) != 0)
         {
+            AudioManager.Instance.PlaySoundEffect("AnchorExplosion");
             Destroy(gameObject);
         }
     }

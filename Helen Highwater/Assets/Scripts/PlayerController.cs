@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        helenRunID = AudioManager.Instance.AddAudio("helenRun2");
+        helenRunID = AudioManager.Instance.AddAudio("helenRun3");
         player = ReInput.players.GetPlayer(playerId);
         rb = GetComponent<Rigidbody2D>();
 
