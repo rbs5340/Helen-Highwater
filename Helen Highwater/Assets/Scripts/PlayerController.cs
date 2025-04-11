@@ -357,7 +357,6 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PauseMidAir()
     {
         isPausedMidAir = true;
-        Vector2 storedVelocity = rb.velocity; // save current velocity
         rb.velocity = Vector2.zero; // stop movement
         rb.gravityScale = 0; // disable gravity
 
@@ -379,7 +378,7 @@ public class PlayerController : MonoBehaviour
 
         // restore normal movement
         rb.gravityScale = 1;
-        rb.velocity = storedVelocity;
+        rb.velocity = Vector2.zero;
         isPausedMidAir = false;
         attackTimer = 0;
         
