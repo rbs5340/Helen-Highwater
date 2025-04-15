@@ -6,10 +6,6 @@ public class CameraFollowPlayer : MonoBehaviour
 {
     #region Singleton
     public static CameraFollowPlayer Instance;
-    private bool isShaking; //If screen is shaking
-    private float shakeTime; //How long it will shake for
-    private float shakeStartTime; //When shaking started
-
     // Sets up instance of the Game Manager Singleton
     private void Awake()
     {
@@ -25,6 +21,10 @@ public class CameraFollowPlayer : MonoBehaviour
     }
     #endregion
 
+    
+    private bool isShaking; //If screen is shaking
+    private float shakeTime; //How long it will shake for
+    private float shakeStartTime; //When shaking started
 
     public Transform player;
     public Transform background;

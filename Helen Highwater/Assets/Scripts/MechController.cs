@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Rewired;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 using System;
 
 public class MechController : MonoBehaviour
@@ -55,6 +56,10 @@ public class MechController : MonoBehaviour
     private Vector2 spawnLocation;
 
     public float mechTimer;
+    private float maxMechTime = 90f;
+
+    private UnityEngine.UI.Slider escapeSlider;
+    public GameObject hoverSlider;
 
     private void Start()
     {
@@ -76,7 +81,9 @@ public class MechController : MonoBehaviour
         mechRunID = AudioManager.Instance.AddAudio("mechRun");
         mechHoverID = AudioManager.Instance.AddAudio("mechHover");
 
-        mechTimer = 90f;
+        mechTimer = maxMechTime;
+
+        escapeSlider = EscapeTimer.Instance.getSlider();
     }
 
     private void Update()
@@ -93,9 +100,11 @@ public class MechController : MonoBehaviour
         {
             rb.position = spawnLocation;
             rb.velocity = Vector3.zero;
-            mechTimer = 90f;
+            mechTimer = maxMechTime;
             AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
+
+        UpdateSlider(escapeSlider,mechTimer,maxMechTime);
 
         //Sends Animation states to animator
         foreach (state s in Enum.GetValues(typeof(state)))
@@ -266,6 +275,11 @@ public class MechController : MonoBehaviour
 
             playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
         }
+    }
+
+    public void UpdateSlider(UnityEngine.UI.Slider slider, float value, float maxValue)
+    {
+        slider.value = value / maxValue;
     }
 
 }

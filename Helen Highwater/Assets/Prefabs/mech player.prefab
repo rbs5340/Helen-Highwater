@@ -109,6 +109,9 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 4080713300660254439}
   attackRate: 0.3
   attackAnimationTimer: 0
+  mechTimer: 0
+  escapeSlider: {fileID: 8618537213690534932, guid: b660e759c86ed95479f101977f70fa3a, type: 3}
+  hoverSlider: {fileID: 0}
 --- !u!50 &5117369341553324894
 Rigidbody2D:
   serializedVersion: 4
