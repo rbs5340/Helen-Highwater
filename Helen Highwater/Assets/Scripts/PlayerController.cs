@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
                 activeWrench = Instantiate(WrenchPrefab, attackSpawnPoint.position, Quaternion.identity);
                 WrenchBehaviour wrenchScript = activeWrench.GetComponent<WrenchBehaviour>();
-                AudioManager.Instance.PlaySoundEffect("wrenchThrow");
+                AudioManager.Instance.PlaySoundEffect("wrenchThrow2");
 
                 if (wrenchScript)
                 {
