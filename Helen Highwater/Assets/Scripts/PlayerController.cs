@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
         if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        //Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.x);
         
     }
 
@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
                 activeWrench = Instantiate(WrenchPrefab, attackSpawnPoint.position, Quaternion.identity);
                 WrenchBehaviour wrenchScript = activeWrench.GetComponent<WrenchBehaviour>();
-                AudioManager.Instance.PlaySoundEffect("wrenchThrow");
+                AudioManager.Instance.PlaySoundEffect("wrenchThrow2");
 
                 if (wrenchScript)
                 {
@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
             if (dashTimer > 0)
             {
                 dashTimer -= Time.deltaTime;
-                rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y);
+                //rb.velocity = new Vector2(dashSpeed.x * Mathf.Sign(rb.velocity.x), rb.velocity.y); // not needed and adds a bug
             }
             else if (rb.velocity.y < 0)
             {
@@ -267,6 +267,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Debug.Log(collision);
         if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Hazard"))
         {
             damagedTimer = 1f;
@@ -309,7 +310,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        
+       
         if (col.gameObject.layer == 11 && playerState == state.dash && dashTimer < 0.45 && parryAvailable)
         {
             parryAvailable = false;
@@ -333,12 +334,18 @@ public class PlayerController : MonoBehaviour
         {
             GainHealth(1);
         }
+
+        //Checkpoint
+        if (col.gameObject.layer == 15)
+        {
+            spawnLocation = rb.position;
+        }
     }
 
     //This lets helen parry if she starts the dash inside of the lightbulb or wrench. Looks very janky on the lightbulb but good on the wrench.
     void OnTriggerExit2D(Collider2D col)
     {
-        Debug.Log(col);
+        
         if (col.gameObject.layer == 11 && playerState == state.dash && parryAvailable)
         {
             parryAvailable = false;

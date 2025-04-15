@@ -12,6 +12,7 @@ TagManager:
   - Object
   - Hazard
   - Anchor
+  - Switch
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Helen
   - Gear
   - Heart
-  - 
+  - Checkpoint
   - 
   - 
   - 
