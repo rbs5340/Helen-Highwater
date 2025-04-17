@@ -88,7 +88,7 @@ public class MechController : MonoBehaviour
 
         currentHoverFuel = maxHoverFuel;
 
-        escapeSlider = EscapeTimer.Instance.getSlider();
+        //escapeSlider = EscapeTimer.Instance.getSlider();
     }
 
     private void Update()
@@ -109,7 +109,7 @@ public class MechController : MonoBehaviour
             AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
 
-        UpdateSlider(escapeSlider, mechTimer, maxMechTime);
+        //UpdateSlider(escapeSlider, mechTimer, maxMechTime);
 
         //Sends Animation states to animator
         foreach (state s in Enum.GetValues(typeof(state)))
