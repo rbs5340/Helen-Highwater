@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EscapeTimer : MonoBehaviour
 {
+    public Slider slider;
+
     #region Singleton
     public static EscapeTimer Instance;
     // Sets up instance of the Game Manager Singleton
@@ -24,7 +26,7 @@ public class EscapeTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Renderer>().enabled = false;
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,7 +37,12 @@ public class EscapeTimer : MonoBehaviour
 
     public Slider getSlider()
     {
-        GetComponent<Renderer>().enabled = true;
-        return this.gameObject.GetComponent<Slider>();
+        this.gameObject.SetActive(true);
+        return this.slider;
+    }
+
+    public void disable()
+    {
+        this.gameObject.SetActive(false);
     }
 }
