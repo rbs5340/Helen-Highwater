@@ -88,7 +88,7 @@ public class MechController : MonoBehaviour
 
         currentHoverFuel = maxHoverFuel;
 
-        //escapeSlider = EscapeTimer.Instance.getSlider();
+        escapeSlider = EscapeTimer.Instance.getSlider();
     }
 
     private void Update()
@@ -109,7 +109,7 @@ public class MechController : MonoBehaviour
             AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
 
-        //UpdateSlider(escapeSlider, mechTimer, maxMechTime);
+        UpdateSlider(escapeSlider, mechTimer, maxMechTime);
 
         //Sends Animation states to animator
         foreach (state s in Enum.GetValues(typeof(state)))
@@ -122,8 +122,17 @@ public class MechController : MonoBehaviour
             //Debug.Log(s.ToString());
         }
 
+        
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
+        {
+            Debug.Log("Flipped");
+            hoverSlider.GetComponent<UnityEngine.UI.Slider>().SetDirection(UnityEngine.UI.Slider.Direction.LeftToRight, true);
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
+        }
+        else
+        {
+            hoverSlider.GetComponent<UnityEngine.UI.Slider>().SetDirection(UnityEngine.UI.Slider.Direction.RightToLeft, true);
+        }
         //Logs player game state for testing purposes
         //Debug.Log(mechTimer);
 
@@ -138,6 +147,7 @@ public class MechController : MonoBehaviour
         {
             rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
             lastDirection = Mathf.Sign(direction); // Update last facing direction
+            
 
             if (isGrounded)
             {
@@ -227,6 +237,7 @@ public class MechController : MonoBehaviour
         {
             if (playerState != state.hover)
             {
+                hoverSlider.gameObject.SetActive(true);
                 playerState = state.hover;
             }
 
@@ -236,6 +247,7 @@ public class MechController : MonoBehaviour
 
             // drain fuel
             currentHoverFuel -= hoverFuelDrain * Time.deltaTime;
+            UpdateSlider(hoverSlider.GetComponent<UnityEngine.UI.Slider>(), currentHoverFuel, maxHoverFuel);
 
             // Play hover sound
             AudioManager.Instance.PlayAudio(mechHoverID);
@@ -271,6 +283,7 @@ public class MechController : MonoBehaviour
             AudioManager.Instance.PlaySoundEffect("mechLand");
 
             isGrounded = true;
+            hoverSlider.gameObject.SetActive(false);
             currentHoverFuel = maxHoverFuel;
 
             playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;

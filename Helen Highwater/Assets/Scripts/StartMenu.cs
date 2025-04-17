@@ -23,6 +23,11 @@ public class UIManager : MonoBehaviour
     public void LoadGame(string scenename)
     { //Change scenename in inspector in the StartMenu scene if you want to test different scenes from Start Menu
         AudioManager.Instance.PlaySoundEffect("buttonPress");
+        // Restarts the game soundtrack
+        AudioManager.Instance.StopAudio(0);
+        AudioManager.Instance.StopAudio(1);
+        // Plays the main theme
+        AudioManager.Instance.PlayMusic(0, 0.2f);
         SceneManager.LoadScene(scenename);
     }
 

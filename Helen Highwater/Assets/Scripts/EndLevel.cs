@@ -13,6 +13,7 @@ public class EndLevel : MonoBehaviour
 
             if (pauseMenu != null)
             {
+                EscapeTimer.Instance.disable();
                 pauseMenu.EndScreen(); // call the EndScreen method from PauseMenu
             }
         }
