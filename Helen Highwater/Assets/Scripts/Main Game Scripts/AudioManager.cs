@@ -41,7 +41,8 @@ public class AudioManager : MonoBehaviour
 
     // Ints for sound indexes
     // Every class will need one of these for each looping sound effect they have
-    private int musicSFX;
+    private int helenOST;
+    private int mechOST;
 
     // Start is called before the first frame update
     void Start()
@@ -57,11 +58,13 @@ public class AudioManager : MonoBehaviour
 
         // Sound Index variables should be initialized to a value less than 0
         // Or they should be initialized with AddAudio immediately
-        musicSFX = -1;
+        helenOST = -1;
+        mechOST = -1;
 
         // Testing junk
-        //musicSFX = AddAudio("weezerRiff");
-        //PlayAudio(musicSFX);
+        helenOST = AddAudio("lvl1_normal"); // Should be index 0
+        mechOST = AddAudio("lvl1_panic"); // Should be index 1
+        //PlayMusic(helenOST, 0.2f);
 
         // Don't destroy this object on load
         DontDestroyOnLoad(this.gameObject);
@@ -136,6 +139,20 @@ public class AudioManager : MonoBehaviour
         audioSources[audioID].Play();
     }
 
+
+    // PlayMusic: Similar to PlayAudio, but uses musicVolume slider
+    // also takes in a float to adjust volume
+    public void PlayMusic(int musicID, float volume)
+    {
+        if (musicID < 0 || audioSources[musicID].isPlaying)
+        {
+            return;
+        }
+
+        audioSources[musicID].volume = masterVolume * musicVolume * volume;
+        audioSources[musicID].Play();
+    }
+
     // Returns whether or not audio file is currently playing
     public bool isPlaying(int audioID)
     {
@@ -199,7 +216,16 @@ public class AudioManager : MonoBehaviour
         {
             if (audioSources[i].isPlaying)
             {
-                audioSources[i].Stop();
+                // If the index represents the game soundtrack,
+                // Pause instead of stopping
+                if(i <= 1)
+                {
+                    audioSources[i].Pause();
+                }
+                else
+                {
+                    audioSources[i].Stop();
+                }
             }
         }
 
