@@ -125,6 +125,7 @@ public class PauseMenu : MonoBehaviour
         pauseButton.SetActive(true);
         pauseMenu.SetActive(false);
         AudioManager.Instance.PlaySoundEffect("buttonPress");
+        AudioManager.Instance.PlayMusic(GlobalVar.Instance.helenState, 0.2f);
     }
 
     public void Home()

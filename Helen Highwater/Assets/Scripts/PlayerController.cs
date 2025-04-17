@@ -338,7 +338,7 @@ public class PlayerController : MonoBehaviour
         //Checkpoint
         if (col.gameObject.layer == 15)
         {
-            spawnLocation = rb.position;
+            spawnLocation = col.gameObject.transform.position;
         }
     }
 

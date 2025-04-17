@@ -25,12 +25,14 @@ public class GlobalVar : MonoBehaviour
 
     public int gearsCollected; // Number of gears the player has collected
     public int totalGears; // The total number of gears in the level
+    public int helenState; // 0 for Helen, 1 for Mech
     public float startTime;
 
     // Start is called before the first frame update
     void Start()
     {
         gearsCollected = 0;
+        helenState = 0;
         totalGears = 3;
         startTime = Time.time;
     }
