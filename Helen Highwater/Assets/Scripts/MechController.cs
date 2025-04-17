@@ -43,9 +43,14 @@ public class MechController : MonoBehaviour
     private float direction;
     private state playerState;
 
-    //Testing hover
-    private float hoverTimer;
-    private bool hoverAvailable;
+    [Header("Hover Settings")]
+    public float maxHoverFuel = 2f;
+    public float hoverFuelDrain = 1f;
+    public float hoverAcceleration = 0.1f;
+    public float maxHoverUpwardSpeed = 2f;
+
+    private float currentHoverFuel;
+
 
     // Integers to store looping SFX indexes
     private int mechRunID;
@@ -81,7 +86,7 @@ public class MechController : MonoBehaviour
         mechRunID = AudioManager.Instance.AddAudio("mechRun");
         mechHoverID = AudioManager.Instance.AddAudio("mechHover");
 
-        mechTimer = maxMechTime;
+        currentHoverFuel = maxHoverFuel;
 
         escapeSlider = EscapeTimer.Instance.getSlider();
     }
@@ -104,7 +109,7 @@ public class MechController : MonoBehaviour
             AudioManager.Instance.PlaySoundEffect("mechDeath");
         }
 
-        UpdateSlider(escapeSlider,mechTimer,maxMechTime);
+        UpdateSlider(escapeSlider, mechTimer, maxMechTime);
 
         //Sends Animation states to animator
         foreach (state s in Enum.GetValues(typeof(state)))
@@ -121,7 +126,7 @@ public class MechController : MonoBehaviour
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Logs player game state for testing purposes
         //Debug.Log(mechTimer);
-        
+
     }
 
     private void HandleMovement()
@@ -213,51 +218,45 @@ public class MechController : MonoBehaviour
         }
     }
 
-    //Testing Hover
     private void HandleHover()
     {
-        //Debug.Log(dashTimer);
-        //Will keep the player's momentum while in dash state and increment the timer
-        if (playerState == state.hover)
-        {
+        bool jumpHeld = player.GetButton("Jump");
 
-            if (hoverTimer > 0)
+        // eneter hovering state when not grounded + jump is held
+        if (!isGrounded && jumpHeld && currentHoverFuel > 0f)
+        {
+            if (playerState != state.hover)
             {
-                hoverTimer -= Time.deltaTime;
-                if (rb.velocity.y <= 0f)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, 0.3f); //I made this 0.3 to counteract gravity or something idk but it works
-                }
-
+                playerState = state.hover;
             }
-            else
-            {
-                playerState = state.fall;
-            }
-        }
 
-        //Will begin the dash if not already in dash state and the button is pressed
-        else if (player.GetButtonDown("Dash") && hoverAvailable && isGrounded == false)
-        {
-            hoverAvailable = false;
-            playerState = state.hover;
-            hoverTimer = 1f;
-            isGrounded = false;
-        }
+            // apply upward acceleration
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + hoverAcceleration);
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -Mathf.Infinity, maxHoverUpwardSpeed));
 
-        if (playerState == state.hover)
-        {
+            // drain fuel
+            currentHoverFuel -= hoverFuelDrain * Time.deltaTime;
+
+            // Play hover sound
             AudioManager.Instance.PlayAudio(mechHoverID);
         }
         else
         {
+            // exit hover
+            if (playerState == state.hover)
+            {
+                playerState = (rb.velocity.y < 0f) ? state.fall : state.rise;
+            }
+
+            // stop hover audio
             if (AudioManager.Instance.isPlaying(mechHoverID))
             {
                 AudioManager.Instance.StopAudio(mechHoverID);
             }
         }
-
     }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -265,13 +264,14 @@ public class MechController : MonoBehaviour
         // because the y-velocity needs to be 0. Could consider having a low threshold instead
         // of requiring it to be exactly 0 - Will
         if (collision.gameObject.CompareTag("Ground"))
-            
+
         {
             Debug.Log("LANDED");
             CameraFollowPlayer.Instance.Shake();
             AudioManager.Instance.PlaySoundEffect("mechLand");
+
             isGrounded = true;
-            hoverAvailable = true; //Test hover
+            currentHoverFuel = maxHoverFuel;
 
             playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
         }
