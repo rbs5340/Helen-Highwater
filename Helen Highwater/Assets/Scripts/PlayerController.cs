@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private int helenRunID;
     public Animator animator;
 
-    enum state
+    public enum state
     {
         idle,
         run,
@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private float attackTimer;
     private bool dashAvailable;
-    private bool parryAvailable;
+    public bool parryAvailable;
 
     private float direction;
-    private state playerState;
+    public state playerState;
 
     private float dashTimer = 0.5f;
     private float decelerate;
