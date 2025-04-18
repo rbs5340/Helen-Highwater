@@ -21,6 +21,7 @@ public class Checkpoint : MonoBehaviour
         if (collision.gameObject.CompareTag("Player - Helen"))
         {
             this.GetComponent<Collider2D>().enabled = false;
+            AudioManager.Instance.PlaySoundEffect("checkpoint");
             //this.gameObject.SetActive(false);
         }
     }
