@@ -316,17 +316,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   animator: {fileID: 5214948314632163513}
-  moveSpeed: 2.5
+  moveSpeed: 4
   jumpStrength: 6
   decelerationFactor: 0.9
   ProjectilePrefab: {fileID: 3922443426349042702, guid: c7cf255546cd3ce4bba0b38c25ada37c, type: 3}
   attackSpawnPoint: {fileID: 4080713300660254439}
   attackRate: 0.3
   attackAnimationTimer: 0
-  maxHoverFuel: 2
-  hoverFuelDrain: 1
-  hoverAcceleration: 0.1
-  maxHoverUpwardSpeed: 2
+  maxHoverFuel: 1
+  hoverFuelDrain: 1.5
+  hoverAcceleration: 0.2
+  maxHoverUpwardSpeed: 3
   mechTimer: 0
   hoverSlider: {fileID: 3460313260645540022}
 --- !u!50 &5117369341553324894
