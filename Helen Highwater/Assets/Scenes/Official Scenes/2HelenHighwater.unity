@@ -17020,19 +17020,19 @@ PrefabInstance:
       objectReference: {fileID: 7776197142106110701}
     - target: {fileID: 4713570811029717749, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_Size.x
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4713570811029717749, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_Size.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4713570811029717749, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 10.24
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4713570811029717749, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 10.24
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5370053009569005689, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_Sprite
@@ -17056,19 +17056,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7804798208804368868, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7804798208804368868, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7804798208804368868, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -0.374
       objectReference: {fileID: 0}
     - target: {fileID: 7804798208804368868, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.245
       objectReference: {fileID: 0}
     - target: {fileID: 7804798208804368868, guid: d9cc233eaced4c846b0a274021530164, type: 3}
       propertyPath: m_LocalPosition.z
