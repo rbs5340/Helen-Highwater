@@ -51,6 +51,8 @@ public class MechController : MonoBehaviour
 
     private float currentHoverFuel;
 
+    private bool jumpReleased = false;
+
     private float prevYVelocity = 0;
 
     // Integers to store looping SFX indexes
@@ -197,7 +199,15 @@ public class MechController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             isGrounded = false;
             playerState = state.rise;
+
+            jumpReleased = false;
         }
+
+        if (!player.GetButton("Jump"))
+        {
+            jumpReleased = true;
+        }
+
         if (rb.velocity.y < -0.1f && playerState != state.hover)
         {
             prevYVelocity = rb.velocity.y;
@@ -205,7 +215,8 @@ public class MechController : MonoBehaviour
             playerState = state.fall;
             isGrounded = false;
         }
-        if(rb.velocity.y == 0 && playerState != state.idle && playerState != state.run && prevYVelocity < 0)
+
+        if (rb.velocity.y == 0 && playerState != state.idle && playerState != state.run && prevYVelocity < 0)
         {
             //Debug.Log("LANDED NOT COLLISION");
             playerState = (Mathf.Abs(rb.velocity.x) > 0.25) ? state.run : state.idle;
@@ -251,7 +262,7 @@ public class MechController : MonoBehaviour
         bool jumpHeld = player.GetButton("Jump");
 
         // eneter hovering state when not grounded + jump is held
-        if (!isGrounded && jumpHeld && currentHoverFuel > 0f)
+        if (!isGrounded && jumpHeld && currentHoverFuel > 0f && jumpReleased)
         {
             prevYVelocity = rb.velocity.y;
             if (playerState != state.hover)
