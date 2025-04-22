@@ -64,7 +64,11 @@ public class MechController : MonoBehaviour
     private float maxMechTime = 90f;
 
     private UnityEngine.UI.Slider escapeSlider;
+    //public GameObject hoverSlider;
+
+    //Hover Slider Related
     public GameObject hoverSlider;
+    public GameObject parent;
 
     private void Start()
     {
@@ -89,6 +93,11 @@ public class MechController : MonoBehaviour
         currentHoverFuel = maxHoverFuel;
 
         escapeSlider = EscapeTimer.Instance.getSlider();
+
+        //Hover Slider Related
+        this.transform.position = parent.transform.position;
+        parent.transform.position = Vector3.zero;
+        CameraFollowPlayer.Instance.SetPlayer(this.gameObject);
     }
 
     private void Update()
@@ -125,17 +134,15 @@ public class MechController : MonoBehaviour
         
         if (animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
         {
-            //Debug.Log("Flipped");
-            hoverSlider.GetComponent<UnityEngine.UI.Slider>().SetDirection(UnityEngine.UI.Slider.Direction.LeftToRight, true);
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
-        }
-        else
-        {
-            hoverSlider.GetComponent<UnityEngine.UI.Slider>().SetDirection(UnityEngine.UI.Slider.Direction.RightToLeft, true);
         }
         //Logs player game state for testing purposes
         Debug.Log(playerState);
 
+        //Hover Slider Related
+        Vector3 pos = transform.position;
+        pos.y += 1f;
+        hoverSlider.transform.position = pos;
     }
 
     private void HandleMovement()
