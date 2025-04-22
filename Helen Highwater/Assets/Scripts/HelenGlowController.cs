@@ -15,8 +15,8 @@ public class HelenGlowController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(player.gameObject.GetComponent<PlayerController>().playerState);
-        Debug.Log(player.gameObject.GetComponent<PlayerController>().parryAvailable);
+        //Debug.Log(player.gameObject.GetComponent<PlayerController>().playerState);
+        //Debug.Log(player.gameObject.GetComponent<PlayerController>().parryAvailable);
         if(player.gameObject.GetComponent<PlayerController>().playerState == PlayerController.state.dash && player.gameObject.GetComponent<PlayerController>().parryAvailable)
         {
             Vector3 pos=player.transform.position;

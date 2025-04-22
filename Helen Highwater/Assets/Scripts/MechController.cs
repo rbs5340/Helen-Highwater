@@ -51,6 +51,7 @@ public class MechController : MonoBehaviour
 
     private float currentHoverFuel;
 
+    private float prevYVelocity = 0;
 
     // Integers to store looping SFX indexes
     private int mechRunID;
@@ -137,7 +138,7 @@ public class MechController : MonoBehaviour
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         }
         //Logs player game state for testing purposes
-        Debug.Log(playerState);
+        //Debug.Log(prevYVelocity);
 
         //Hover Slider Related
         Vector3 pos = transform.position;
@@ -190,6 +191,7 @@ public class MechController : MonoBehaviour
         if (player.GetButtonDown("Jump") && isGrounded)
 
         {
+            prevYVelocity = rb.velocity.y;
             // Plays mech jump sound effect
             AudioManager.Instance.PlaySoundEffect("mechJump");
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
@@ -198,12 +200,14 @@ public class MechController : MonoBehaviour
         }
         if (rb.velocity.y < -0.1f && playerState != state.hover)
         {
+            prevYVelocity = rb.velocity.y;
             //Debug.Log("FALL");
             playerState = state.fall;
             isGrounded = false;
         }
-        if(rb.velocity.y == 0)
+        if(rb.velocity.y == 0 && playerState != state.idle && playerState != state.run && prevYVelocity < 0)
         {
+            //Debug.Log("LANDED NOT COLLISION");
             playerState = (Mathf.Abs(rb.velocity.x) > 0.25) ? state.run : state.idle;
             isGrounded = true;
             hoverSlider.gameObject.SetActive(false);
@@ -249,6 +253,7 @@ public class MechController : MonoBehaviour
         // eneter hovering state when not grounded + jump is held
         if (!isGrounded && jumpHeld && currentHoverFuel > 0f)
         {
+            prevYVelocity = rb.velocity.y;
             if (playerState != state.hover)
             {
                 hoverSlider.gameObject.SetActive(true);
@@ -271,6 +276,7 @@ public class MechController : MonoBehaviour
             // exit hover
             if (playerState == state.hover)
             {
+                prevYVelocity = rb.velocity.y;
                 playerState = (rb.velocity.y < 0f) ? state.fall : state.rise;
             }
 
@@ -286,9 +292,6 @@ public class MechController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // This code doesn't always occur when the mech touches the ground, I think it might be
-        // because the y-velocity needs to be 0. Could consider having a low threshold instead
-        // of requiring it to be exactly 0 - Will
         if (collision.gameObject.CompareTag("Ground") && rb.velocity.y == 0)
 
         {

@@ -275,14 +275,14 @@ public class PlayerController : MonoBehaviour
             AudioManager.Instance.PlaySoundEffect("helenHit");
             health -= 1;
             HealthDisplay.Instance.healthChange(health);
-            Debug.Log(health);
+            //Debug.Log(health);
 
             knockbackAngle = (collision.gameObject.transform.position.x > rb.position.x) ? -2f : 2f;
             rb.velocity = new Vector2(knockbackAngle, 3f);
 
             if (health <= 0)
             {
-                Debug.Log("YOU DIED");
+                //Debug.Log("YOU DIED");
                 AudioManager.Instance.PlaySoundEffect("helenDeath");
 
                 if (activeWrench != null)
@@ -399,7 +399,7 @@ public class PlayerController : MonoBehaviour
             playerState = state.fall;
             
         }
-        Debug.Log(playerState);
+        //Debug.Log(playerState);
     }
 
     private void GainHealth(int healthGained)
@@ -408,7 +408,7 @@ public class PlayerController : MonoBehaviour
         {
             health += healthGained;
             HealthDisplay.Instance.healthChange(health);
-            Debug.Log(health);
+            //Debug.Log(health);
         }
     }
 }
