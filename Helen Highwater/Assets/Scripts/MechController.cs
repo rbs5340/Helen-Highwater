@@ -137,7 +137,7 @@ public class MechController : MonoBehaviour
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         }
         //Logs player game state for testing purposes
-        //Debug.Log(mechTimer);
+        Debug.Log(playerState);
 
         //Hover Slider Related
         Vector3 pos = transform.position;
@@ -198,9 +198,16 @@ public class MechController : MonoBehaviour
         }
         if (rb.velocity.y < -0.1f && playerState != state.hover)
         {
-            Debug.Log("FALL");
+            //Debug.Log("FALL");
             playerState = state.fall;
             isGrounded = false;
+        }
+        if(rb.velocity.y == 0)
+        {
+            playerState = (Mathf.Abs(rb.velocity.x) > 0.25) ? state.run : state.idle;
+            isGrounded = true;
+            hoverSlider.gameObject.SetActive(false);
+            currentHoverFuel = maxHoverFuel;
         }
     }
 
@@ -282,10 +289,10 @@ public class MechController : MonoBehaviour
         // This code doesn't always occur when the mech touches the ground, I think it might be
         // because the y-velocity needs to be 0. Could consider having a low threshold instead
         // of requiring it to be exactly 0 - Will
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && rb.velocity.y == 0)
 
         {
-            Debug.Log("LANDED");
+            //Debug.Log("LANDED");
             CameraFollowPlayer.Instance.Shake();
             AudioManager.Instance.PlaySoundEffect("mechLand");
 
@@ -293,7 +300,7 @@ public class MechController : MonoBehaviour
             hoverSlider.gameObject.SetActive(false);
             currentHoverFuel = maxHoverFuel;
 
-            playerState = (Mathf.Abs(rb.velocity.x) > 0) ? state.run : state.idle;
+            playerState = (Mathf.Abs(rb.velocity.x) > 0.25) ? state.run : state.idle;
         }
     }
 
