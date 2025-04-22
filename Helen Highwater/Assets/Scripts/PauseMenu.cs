@@ -51,10 +51,31 @@ public class PauseMenu : MonoBehaviour
         {
             gameplayObjects.SetActive(false);
         }
+        if(EscapeTimer.Instance != null)
+        {
+            EscapeTimer.Instance.disable();
+        }
         pauseButton.SetActive(false);
         pauseMenu.SetActive(true);
         AudioManager.Instance.PlaySoundEffect("buttonPress");
         AudioManager.Instance.StopAllSounds();
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        if (gameplayObjects != null)
+        {
+            gameplayObjects.SetActive(true);
+        }
+        if (EscapeTimer.Instance != null)
+        {
+            EscapeTimer.Instance.enable();
+        }
+        pauseButton.SetActive(true);
+        pauseMenu.SetActive(false);
+        AudioManager.Instance.PlaySoundEffect("buttonPress");
+        AudioManager.Instance.PlayMusic(GlobalVar.Instance.helenState, 0.2f);
     }
 
     public void OpenOptions()
@@ -115,18 +136,6 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Resume()
-    {
-        Time.timeScale = 1f;
-        if (gameplayObjects != null)
-        {
-            gameplayObjects.SetActive(true);
-        }
-        pauseButton.SetActive(true);
-        pauseMenu.SetActive(false);
-        AudioManager.Instance.PlaySoundEffect("buttonPress");
-        AudioManager.Instance.PlayMusic(GlobalVar.Instance.helenState, 0.2f);
-    }
 
     public void Home()
     {
