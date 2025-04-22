@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EscapeTimer : MonoBehaviour
 {
     public Slider slider;
+    private bool ac;
 
     #region Singleton
     public static EscapeTimer Instance;
@@ -27,6 +28,7 @@ public class EscapeTimer : MonoBehaviour
     void Start()
     {
         this.gameObject.SetActive(false);
+        ac = false;
     }
 
     // Update is called once per frame
@@ -37,12 +39,26 @@ public class EscapeTimer : MonoBehaviour
 
     public Slider getSlider()
     {
-        this.gameObject.SetActive(true);
+        ac = true;
+        enable();
         return this.slider;
     }
 
     public void disable()
     {
-        this.gameObject.SetActive(false);
+        if (ac)
+        {
+            this.gameObject.SetActive(false);
+        }
+
     }
+
+    public void enable()
+    {
+        if (ac)
+        {
+            this.gameObject.SetActive(true);
+        }
+    }
+    
 }
