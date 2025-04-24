@@ -214,7 +214,8 @@ public class MechController : MonoBehaviour
             //Debug.Log("FALL");
             playerState = state.fall;
             isGrounded = false;
-        }
+            jumpReleased = true; // allow hover at jump apex
+		}
 
         if (rb.velocity.y == 0 && playerState != state.idle && playerState != state.run && prevYVelocity < 0)
         {
