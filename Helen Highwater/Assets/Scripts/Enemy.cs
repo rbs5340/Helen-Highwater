@@ -23,6 +23,11 @@ public class Enemy : MonoBehaviour
     // Integers to store looping SFX indexes
     private int crabWalkID;
 
+    // For respawning the crab on death
+    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerController playerController;
+    private Vector3 startPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +40,7 @@ public class Enemy : MonoBehaviour
         // Sets base speed
         if(speedValue == 0)
         {
-            speedValue = 0.002f;
+            speedValue = 2.0f;
         }
         
         // Sets the "timer"
@@ -138,10 +143,25 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Gets reference to the player and playerController script
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player - Helen");
+            playerController = player.GetComponent<PlayerController>();
+        }
+
+        //Debug.Log(playerController.wasAlive + " " + playerController.isAlive);
+
+        if (!playerController.isAlive)
+        {
+            playerController.isAlive = true;
+            EnemyRespawn();
+        }
+
         if (isAlive)
         {
             // Moves forward (thats it)
-            transform.position = transform.position + new Vector3(speed, 0f, 0f);
+            transform.position = transform.position + new Vector3(speed * Time.deltaTime, 0f, 0f);
 
             // Plays the walk sound effect if this is the first time the crab has moved
             if (!firstMove)
@@ -175,9 +195,6 @@ public class Enemy : MonoBehaviour
         // Stabilize rotation of the z axis
         transform.eulerAngles = new Vector3(transform.eulerAngles.x,
         transform.eulerAngles.y, 0);
-
-        // To Do: track bounds of camera and destroy/deactivate
-        // enemy if it leave camera view while dead
     }
 
     private void EnemyDeath(bool hitByMech)
@@ -212,5 +229,10 @@ public class Enemy : MonoBehaviour
 
         // Death sound effect
         AudioManager.Instance.PlaySoundEffect("crabDeath");
+    }
+
+    private void EnemyRespawn()
+    {
+        Debug.Log("Respawn logic");
     }
 }

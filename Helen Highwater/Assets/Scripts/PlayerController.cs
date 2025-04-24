@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour
 
     private float lastDirection = 1f;
 
+    // For mech respawning logic
+    public bool isAlive = true;
+
     [Header("Attack Pause Settings")]
     public float attackPauseDuration = 0.2f; // How long the player pauses in midair
     private bool isPausedMidAir = false; // Prevents movement during the pause
@@ -95,6 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.position = spawnLocation;
             AudioManager.Instance.PlaySoundEffect("helenDeath");
+            isAlive = false;
             rb.velocity = Vector3.zero;
             health = maxHealth;
             HealthDisplay.Instance.healthChange(health);
@@ -117,7 +121,6 @@ public class PlayerController : MonoBehaviour
         if(animator.transform.rotation != new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f))
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         //Debug.Log(rb.velocity.x);
-        
     }
 
     private void HandleMovement()
@@ -168,6 +171,11 @@ public class PlayerController : MonoBehaviour
             {
                 AudioManager.Instance.StopAudio(helenRunID);
             }
+        }
+
+        if (!isAlive)
+        {
+            isAlive = true;
         }
     }
 
@@ -295,6 +303,7 @@ public class PlayerController : MonoBehaviour
 
                 // Resets Helen's HP, since it was reaching negative values
                 health = maxHealth;
+                isAlive = false;
                 HealthDisplay.Instance.healthChange(health);
             }
 
