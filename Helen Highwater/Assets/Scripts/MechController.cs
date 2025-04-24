@@ -214,7 +214,8 @@ public class MechController : MonoBehaviour
             //Debug.Log("FALL");
             playerState = state.fall;
             isGrounded = false;
-        }
+            jumpReleased = true; // allow hover at jump apex
+		}
 
         if (rb.velocity.y == 0 && playerState != state.idle && playerState != state.run && prevYVelocity < 0)
         {
@@ -278,7 +279,7 @@ public class MechController : MonoBehaviour
             // drain fuel
             currentHoverFuel -= hoverFuelDrain * Time.deltaTime;
             UpdateSlider(hoverSlider.GetComponent<UnityEngine.UI.Slider>(), currentHoverFuel, maxHoverFuel);
-
+            hoverSlider.gameObject.transform.GetChild(1).gameObject.SetActive(currentHoverFuel>0f);
             // Play hover sound
             AudioManager.Instance.PlayAudio(mechHoverID);
         }
