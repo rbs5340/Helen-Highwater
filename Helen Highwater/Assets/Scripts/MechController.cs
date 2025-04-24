@@ -278,7 +278,7 @@ public class MechController : MonoBehaviour
             // drain fuel
             currentHoverFuel -= hoverFuelDrain * Time.deltaTime;
             UpdateSlider(hoverSlider.GetComponent<UnityEngine.UI.Slider>(), currentHoverFuel, maxHoverFuel);
-
+            hoverSlider.gameObject.transform.GetChild(1).gameObject.SetActive(currentHoverFuel>0f);
             // Play hover sound
             AudioManager.Instance.PlayAudio(mechHoverID);
         }
