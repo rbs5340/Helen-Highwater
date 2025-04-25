@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05643f0c6a5643649850a4ba8b5dd279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedValue: 0.003
+  speedValue: 2
   timerValue: 0
   myCollider: {fileID: 1993868704597879320}
 --- !u!50 &2757052927231864562

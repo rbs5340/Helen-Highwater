@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         // Sets base speed
         if(speedValue == 0)
         {
-            speedValue = 0.002f;
+            speedValue = 2.0f;
         }
         
         // Sets the "timer"
@@ -141,7 +141,7 @@ public class Enemy : MonoBehaviour
         if (isAlive)
         {
             // Moves forward (thats it)
-            transform.position = transform.position + new Vector3(speed, 0f, 0f);
+            transform.position = transform.position + new Vector3(speed * Time.deltaTime, 0f, 0f);
 
             // Plays the walk sound effect if this is the first time the crab has moved
             if (!firstMove)
