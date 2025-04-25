@@ -26,10 +26,7 @@ public class Enemy : MonoBehaviour
     // For respawning the crab on death
     [SerializeField] private GameObject player;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private float xPos;
-    [SerializeField] private float yPos;
-    private Vector2 startPos;
-    private SpriteRenderer spriteRenderer;
+    private Vector3 startPos;
 
     // Start is called before the first frame update
     void Start()
@@ -66,17 +63,12 @@ public class Enemy : MonoBehaviour
 
         // Loads crabWalk SFX
         crabWalkID = AudioManager.Instance.AddAudio("crabWalk2");
-
-        // Hardcoded because this just isnt working
-        startPos = new Vector2(xPos, yPos);
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // If enemy collides into a pit
-        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == 8)
         {
             // Reverses the direction of the enemy
             speed = 0;
@@ -108,7 +100,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroys the enemy when the wrench collides with it
-        if ((collision.gameObject.layer == 11) && isAlive)
+        if (collision.gameObject.layer == 11 && isAlive)
         {
             AudioManager.Instance.StopAudio(crabWalkID);
             EnemyDeath(false);
@@ -194,6 +186,11 @@ public class Enemy : MonoBehaviour
             }
             //Debug.Log(onScreen);
         }
+        else if(isMoving)
+        {
+            // Drop down (thats it again)
+            transform.position = transform.position + new Vector3(0f, -(speed/2), 0f);
+        }
         
         // Stabilize rotation of the z axis
         transform.eulerAngles = new Vector3(transform.eulerAngles.x,
@@ -206,16 +203,16 @@ public class Enemy : MonoBehaviour
         isAlive = false;
 
         // Flips the sprite over the x axis
-        //Vector3 enemyScale = transform.localScale;
-        //enemyScale.y = enemyScale.y * -1f;
-        //transform.localScale = enemyScale;
+        Vector3 enemyScale = transform.localScale;
+        enemyScale.y = enemyScale.y * -1f;
+        transform.localScale = enemyScale;
 
         // Pops the enemy up a bit to prevent weird collision
         transform.position = transform.position + new Vector3(0f, 0.2f, 0f);
 
         // Changes the tag to prevent Helen from getting hit
         // Set to "Ground" specifically to allow Helen to jump off of enemy
-        //gameObject.tag = "Ground";
+        gameObject.tag = "Ground";
 
         // Normally, the enemy crab will only die if hit by the mech
         /*if (hitByMech)
@@ -224,24 +221,18 @@ public class Enemy : MonoBehaviour
             myCollider.enabled = false;
         }*/
         // However, due to a bug, it dies to any attack by Helen (for now)
-        //myCollider.enabled = false;
+        myCollider.enabled = false;
 
         // Sets the collision layer to "enemy" to prevent from
         // colliding with edge objects
-        gameObject.layer = 16;
-
-        spriteRenderer.enabled = false;
+        gameObject.layer = 6;
 
         // Death sound effect
         AudioManager.Instance.PlaySoundEffect("crabDeath");
     }
 
-    // Resets the crab when Helen dies
     private void EnemyRespawn()
     {
-        isAlive = true;
-        spriteRenderer.enabled = true;
-        gameObject.layer = 6;
-        transform.position = new Vector2(startPos.x, startPos.y);
+        Debug.Log("Respawn logic");
     }
 }

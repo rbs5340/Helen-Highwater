@@ -74,9 +74,6 @@ public class PlayerController : MonoBehaviour
         spawnLocation = rb.position;
         playerState = state.idle;
 
-        spawnLocation.x = 85f;
-        spawnLocation.y = 5f;
-
         if (!rb)
         {
             Debug.LogError("No Rigidbody2D found on Player!");

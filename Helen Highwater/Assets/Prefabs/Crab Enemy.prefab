@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2757052927231864562}
   - component: {fileID: 1993868704597879320}
   - component: {fileID: 3486622017902935570}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Crab Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -103,8 +103,6 @@ MonoBehaviour:
   speedValue: 3
   timerValue: 0
   myCollider: {fileID: 1993868704597879320}
-  player: {fileID: 0}
-  playerController: {fileID: 0}
 --- !u!50 &2757052927231864562
 Rigidbody2D:
   serializedVersion: 4

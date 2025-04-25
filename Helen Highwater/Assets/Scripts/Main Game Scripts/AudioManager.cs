@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
         source.PlayOneShot(soundEffect, masterVolume * sfxVolume);
 
         // Prints the name of the sound file that is being played
-        //Debug.Log("Now Playing: " + soundEffectName);
+        Debug.Log("Now Playing: " + soundEffectName);
     }
 
     // AddSoundEffect: Setup for sound effects that need to be looped
@@ -118,7 +118,7 @@ public class AudioManager : MonoBehaviour
 
         // Returns the name of the sound file and its index
         // Store this index in order to call to Play/Pause/Stop
-        //Debug.Log("Audio Index " + (audioClips.Count - 1) + ": " + audioName);
+        Debug.Log("Audio Index " + (audioClips.Count - 1) + ": " + audioName);
 
         //GetAllTracks();
         return audioClips.Count - 1;
