@@ -21,7 +21,6 @@ public class MechController : MonoBehaviour
         fall,
         damaged,
         wrenchThrow,
-        aerialWrenchThrow,
         hover
     }
 
@@ -141,7 +140,7 @@ public class MechController : MonoBehaviour
             animator.transform.rotation = new Quaternion(0f, (lastDirection - 1f) * 90f, 0f, 0f);
         }
         //Logs player game state for testing purposes
-        //Debug.Log(playerState);
+        //Debug.Log(prevYVelocity);
 
         //Hover Slider Related
         Vector3 pos = transform.position;
@@ -234,7 +233,6 @@ public class MechController : MonoBehaviour
 
         if (player.GetButton("Attack") && attackTimer <= 0f) // Fire while attack button is held
         {
-
             ShootProjectile();
             attackTimer = attackRate; // Reset attack cooldown
         }
@@ -242,14 +240,7 @@ public class MechController : MonoBehaviour
         // If attacking, keep the state as wrenchThrow
         if (player.GetButton("Attack") && playerState != state.hover)
         {
-            if (isGrounded)
-            {
-                playerState = state.wrenchThrow;
-            }
-            else
-            {
-                playerState = state.aerialWrenchThrow;
-            }
+            playerState = state.wrenchThrow;
         }
     }
 
